@@ -32,6 +32,7 @@ body{
 .lbr-margin{
     margin-bottom: var(--lbr-margin-default);
 }
+
 * + .fly-margin{
     margin-top: var(--lbr-margin-default) !important;
 }
@@ -46,6 +47,8 @@ body{
     font-size: 1em;
     border-radius: var(--lbr-border-radius);
     border: 1px solid thistle;
-}:focus{
+}
+
+.lbr-input:focus, .lbr-textarea:focus, .lbr-button:focus{
     outline: 1px solid slateblue;
 }
