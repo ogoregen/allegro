@@ -12,7 +12,7 @@ Steps 1-3 only need to be done once as a configuration
    ```
    to
    ```xml
-   DocumentRoot "C:/xampp/htdocs/student-messaging-system/src"
-   <Directory "C:/xampp/htdocs/student-messaging-system/src">
+   DocumentRoot "C:/xampp/htdocs/allegro-mail/src"
+   <Directory "C:/xampp/htdocs/allegro-mail/src">
    ```
 4. Start Apache in XAMPP and open `localhost` or `127.0.0.1` in your browser
