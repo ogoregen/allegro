@@ -1,6 +1,6 @@
 ## Running Locally with XAMPP
 
-Steps 1-3 need to be done only once as a configuration
+Steps 1-3 only need to be done once as a configuration
 
 1. Place repository into `C:\xampp\htdocs` (or your installation folder)
 2. Run XAMPP, open `httpd.conf` with Config menu of Apache
