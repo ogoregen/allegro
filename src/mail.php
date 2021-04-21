@@ -18,11 +18,11 @@ function sendMail($to, $subject, $body){
         $mail->isSMTP();
         $mail->Host = "smtp.yandex.com";
         $mail->SMTPAuth = true;
-        $mail->Username = "";
-        $mail->Password = "";
+        $mail->Username = "noreply@allegroapp.me";
+        $mail->Password = "vgwkidkophdvmpzp";
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port = 465;
-        $mail->setFrom("", "Allegro");
+        $mail->setFrom("noreply@allegroapp.me", "Allegro");
         
         $mail->addAddress($to);
         $mail->isHTML(true);
