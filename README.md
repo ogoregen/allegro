@@ -19,4 +19,4 @@ Steps 1-3 only need to be done once as a configuration
 
 ## Dependencies
 
-* [PHPMailer](https://github.com/PHPMailer/PHPMailer) (Place `src` folder of PHPMailer into `src/external/PHPMailer/`. `PHPMailer.php`, `SMTP.php`, and `Exception.php` are sufficient)
+* [PHPMailer](https://github.com/PHPMailer/PHPMailer) (Place `src/` folder of PHPMailer into `src/external/PHPMailer/`. `PHPMailer.php`, `SMTP.php`, and `Exception.php` are sufficient)
