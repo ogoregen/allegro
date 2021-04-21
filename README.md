@@ -1,3 +1,40 @@
+## Creating Views
+
+A view represents a page that is rendered or an action like logging out. It processes data and passes them to templates or redirects to another view. Templates contain html and may render php variables passed to them.
+
+Views are functions in `views.php`. They also need to be added to the urls array in `index.php`:
+
+```php
+$urls = [
+   //...
+   "pathToView" => "nameOfView"
+];
+```
+
+### A view rendering a template:
+
+```php
+function ourNewView(){
+
+   $context = [
+      //this array is for data that will be used in the template
+      "fruit" => "apple",
+      "color" => "green
+   ];
+   render("ourNewTemplate.php", $context)
+}
+```
+
+## A view redirecting:
+
+```php
+function ourNewView(){
+
+   //do some business stuff
+   header("Location: /"); //redirect home
+}
+```
+
 ## Running Locally with XAMPP
 
 Steps 1-4 only need to be done once as a configuration
