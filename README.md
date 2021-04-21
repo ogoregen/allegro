@@ -11,6 +11,8 @@ $urls = [
 ];
 ```
 
+This record defines a view that is served on `localhost/pathToview` by the function `nameOfView`.
+
 ### A view rendering a template:
 
 ```php
