@@ -16,3 +16,7 @@ Steps 1-3 only need to be done once as a configuration
    <Directory "C:/xampp/htdocs/allegro-mail/src">
    ```
 4. Start Apache in XAMPP and open `localhost` or `127.0.0.1` in your browser
+
+## Dependencies
+
+* [PHPMailer](https://github.com/PHPMailer/PHPMailer) (Place `src` folder of PHPMailer into `src/external/PHPMailer/`. `PHPMailer.php`, `SMTP.php`, and `Exception.php` are sufficient)
