@@ -25,7 +25,7 @@ function ourNewView(){
 }
 ```
 
-## A view redirecting:
+### A view redirecting:
 
 ```php
 function ourNewView(){
