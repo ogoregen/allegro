@@ -2,7 +2,7 @@
 
 A view represents a page that is rendered or an action like logging out. It processes data and passes them to templates or redirects to another view. Templates contain html and may render php variables passed to them.
 
-Views are functions in `views.php`. They also need to be added to the urls array in `index.php`:
+Views are functions in `views.php`. They also need to be added to the urls array in `urls.php`:
 
 ```php
 $urls = [
