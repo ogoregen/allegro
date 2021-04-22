@@ -38,5 +38,3 @@ function sendMail($to, $subject, $body){
         return false;
     }
 }
-
-sendMail("ogoregen@outlook.com", "conf test", "yes");

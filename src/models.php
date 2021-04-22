@@ -1,8 +1,8 @@
 
 <?php
 
-require "database.php";
-require "Model.php";
+require "base/database.php";
+require "base/Model.php";
 
 class User extends Model{
 

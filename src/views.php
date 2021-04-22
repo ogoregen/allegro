@@ -2,23 +2,35 @@
 <?php
 
 // views represent pages, and fill and render templates
-// to add a view, create a function that calls render() or redirects to another view and add it to the urls array in index.php
+// to add a view, create a function that calls render() or redirects to another view and add it to the urls array in urls.php
 
-require "renderer.php";
+require "base/renderer.php";
 
 //base:
 
-function home(){
+function dashboard(){
 
     $context = [
 
         "title" => "Home",
         "metaDescription" => ""
     ];
-    render("home.php", $context);
+    render("dashboard.php", $context);
 }
 
 //authentication:
+
+function register(){
+
+    
+    $context = [
+
+        "title" => "Sign Up",
+        "metaDescription" => "",
+        "autofill" => $autofill
+    ];
+    render("register.php", $context);
+}
 
 function login(){
 
