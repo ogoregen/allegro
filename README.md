@@ -1,3 +1,5 @@
+Allegro is an asynchronous messaging web application. This document aims its inner workings to contributors.
+
 ## Creating Views
 
 A view represents a page that is rendered or an action like logging out. It processes data and passes them to templates or redirects to another view. Templates contain html and may render php variables passed to them.
