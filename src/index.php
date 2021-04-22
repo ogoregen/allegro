@@ -3,12 +3,16 @@
 
 //calls correct view depending on url
 
-include "views.php";
+session_set_cookie_params(2147483647); //maximum cookie lifespan
+session_start();
+
+require "views.php";
 
 $urls = [
     //path => view
     "" => "home", 
     "login" => "login",
+    "logout" => "logout",
     "404" => "_404"
 ];
 
@@ -19,5 +23,3 @@ $path = $url[0];
 if(array_key_exists($path, $urls)) $view = $urls[$path]; //if url is valid
 else $view = $urls["404"];
 $view();
-
-?>

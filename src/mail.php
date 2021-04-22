@@ -6,8 +6,9 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require "external/PHPMailer/src/PHPMailer.php";
-require 'external/PHPMailer/src/SMTP.php';
+require "external/PHPMailer/src/SMTP.php";
 require "external/PHPMailer/src/Exception.php";
+require "config.php";
 
 function sendMail($to, $subject, $body){
 
@@ -16,13 +17,14 @@ function sendMail($to, $subject, $body){
     try{
 
         $mail->isSMTP();
-        $mail->Host = "smtp.yandex.com";
         $mail->SMTPAuth = true;
-        $mail->Username = "noreply@allegroapp.me";
-        $mail->Password = "vgwkidkophdvmpzp";
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        $mail->Port = 465;
-        $mail->setFrom("noreply@allegroapp.me", "Allegro");
+        
+        $mail->Port = MAIL_PORT;
+        $mail->Host = MAIL_HOST;
+        $mail->Username = MAIL_USERNAME;
+        $mail->Password = MAIL_PASSWORD;
+        $mail->setFrom(MAIL_FROM_ADDR, MAIL_FROM_NAME);
         
         $mail->addAddress($to);
         $mail->isHTML(true);
@@ -37,4 +39,4 @@ function sendMail($to, $subject, $body){
     }
 }
 
-?>
+sendMail("ogoregen@outlook.com", "conf test", "yes");

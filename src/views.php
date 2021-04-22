@@ -2,9 +2,11 @@
 <?php
 
 // views represent pages, and fill and render templates
-// to add a view, create a function that calls render() and add it to the urls array in index.php
+// to add a view, create a function that calls render() or redirects to another view and add it to the urls array in index.php
 
-include "renderer.php";
+require "renderer.php";
+
+//base:
 
 function home(){
 
@@ -16,15 +18,34 @@ function home(){
     render("home.php", $context);
 }
 
+//authentication:
+
 function login(){
 
+    $autofill = [];
+    $errors = [];
+    if($_SERVER["REQUEST_METHOD"] === "POST"){
+
+        //login
+        header("Location: /dashboard");
+    }
     $context = [
 
         "title" => "Log In",
-        "metaDescription" => ""
+        "metaDescription" => "",
+        "autofill" => $autofill
     ];
     render("login.php", $context);
 }
+
+function logout(){
+
+    $_SESSION = [];
+    session_destroy();
+    header("Location: /");
+}
+
+//error:
 
 function _404(){
 
@@ -35,5 +56,3 @@ function _404(){
     ];
     render("404.php", $context);
 }
-
-?>
