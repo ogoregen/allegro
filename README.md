@@ -1,4 +1,4 @@
-Allegro is an asynchronous messaging web application. This document aims its inner workings to contributors.
+Allegro is an asynchronous messaging web application. This document aims explaining its inner workings to contributors.
 
 ## Creating Views
 
