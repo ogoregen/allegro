@@ -48,6 +48,7 @@ class User extends Model{
 
     public $id;        //
     public $email;     //
+    public $password;  //
     public $firstName; //
     public $lastName;  // database fields as class properties as they appear in the database
 
