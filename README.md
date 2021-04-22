@@ -37,6 +37,51 @@ function ourNewView(){
 }
 ```
 
+## Models
+
+Model classes represent database tables, and their instances database records. After they are created, the corresponding database table needs to be created manually.
+
+### Model structure:
+
+```php
+class User extends Model{
+
+    public $id;        //
+    public $email;     //
+    public $firstName; //
+    public $lastName;  // database fields as class properties as they appear in the database
+
+    function fullName(){ //utility methods can be created
+
+        return $this->$firstName." ".$this->$lastName;
+    }
+
+    static function who(){ //this method is needed by the parent class
+
+        return __CLASS__;
+    }
+}
+```
+
+### Creating a record:
+
+```php
+$newUser = new User();
+$newUser->email = "newuser@example.com";
+$newUser->firstName = "new";
+$newUser->lastName = "user";
+$newUser->save(); //it's now in the database!
+```
+
+### Reading and updating a record:
+
+```php
+$user = User::get("email = newuser@example.com");
+//do whatever you'd like, such as changing a field:
+$user->email = "newmail@example.com";
+$user->save();
+```
+
 ## Running Locally with XAMPP
 
 Steps 1-4 only need to be done once as a configuration
