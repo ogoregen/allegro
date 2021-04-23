@@ -26,6 +26,8 @@ function ourNewView(){
       "color" => "green
    ];
    render("ourNewTemplate.php", $context)
+   //or if you're not passing variables:
+   render("ourNewTemplate.php");
 }
 ```
 
