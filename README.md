@@ -1,5 +1,7 @@
 Allegro is an asynchronous messaging web application. This document aims to explain its inner workings to contributors.
 
+Allegro, being inspired by Django. Adopts Model-View-Controller design pattern.
+
 ## Creating Views
 
 A view represents a page that is rendered or an action like logging out. It processes data and passes them to templates or redirects to another view. Templates contain html and may render php variables passed to them.
