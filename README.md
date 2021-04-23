@@ -87,6 +87,13 @@ $user->email = "newmail@example.com";
 $user->save();
 ```
 
+## Sending e-mails
+
+```php
+require "base/mail.php";
+sendMail("recipient@example.com", "this is the subject", "this is the body)"); // body can contain html
+```
+
 ## Running Locally with XAMPP
 
 Steps 1-4 only need to be done once as a configuration
