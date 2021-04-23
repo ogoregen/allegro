@@ -14,6 +14,6 @@ class User extends Model{
 
     function fullName(){
 
-        return $this->$firstName." ".$this->$lastName;
+        return $this->firstName." ".$this->lastName;
     }
 }

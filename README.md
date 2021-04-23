@@ -58,12 +58,7 @@ class User extends Model{
 
     function fullName(){ //utility methods can be created
 
-        return $this->$firstName." ".$this->$lastName;
-    }
-
-    static function who(){ //this method is needed by the parent class
-
-        return __CLASS__;
+        return $this->firstName." ".$this->lastName;
     }
 }
 ```
