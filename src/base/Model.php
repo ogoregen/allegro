@@ -34,10 +34,10 @@ class Model{
     static function get($condition, $fields = "*"){
 
         global $connection;
-        $query = "SELECT $fields FROM ".static::who()." WHERE $condition;";
+        $query = "SELECT $fields FROM ".get_called_class()." WHERE $condition;";
         $result = $connection->query($query);
         $result = $result->fetch_assoc();
-        return new (static::who())($result);
+        return new (get_called_class())($result);
     }
 
     function __set($name, $value){

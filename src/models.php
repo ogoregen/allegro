@@ -16,9 +16,4 @@ class User extends Model{
 
         return $this->$firstName." ".$this->$lastName;
     }
-
-    static function who(){
-
-        return __CLASS__;
-    }
 }
