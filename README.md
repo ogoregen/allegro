@@ -1,6 +1,6 @@
 Allegro is an asynchronous messaging web application. This document aims to explain its inner workings to contributors.
 
-Allegro, being inspired by Django. Adopts Model-View-Controller design pattern.
+Allegro, being inspired by Django, adopts Model-View-Controller design pattern.
 
 ## Creating Views
 
