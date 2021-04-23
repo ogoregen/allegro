@@ -1,20 +1,23 @@
 
 <?php
 
+require "database.php";
+
 class Model{
 
-    function __construct($fields = []){
+    function __construct($fields = [], $migration = false){
         
-        foreach($fields as $key => $value){
+        if(!$migration){
 
-            $this->$key = $value;
+            foreach($this as $key => $value) $this->$key = null; //clear property values
+            foreach($fields as $key => $value) $this->$key = $value; //
         }
     }
 
     function save(){
 
         $data = (array)$this;
-        array_shift($data);
+        array_shift($data); //omitting id
         if(!is_null($this->id)){ //update if exists
 
             $query = "UPDATE ".get_class($this)." SET  ";
@@ -42,6 +45,6 @@ class Model{
 
     function __set($name, $value){
 
-        throw new Exception("Cannot add new property \$$name to instance of " . __CLASS__);
+        throw new Exception("Cannot add new property \$$name to instance of Model.");
     }
 }

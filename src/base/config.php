@@ -11,4 +11,4 @@ define("MAIL_FROM_NAME", "Allegro");
 define("DB_HOST", "localhost");
 define("DB_USERNAME", "allegro");
 define("DB_PASSWORD", "LIdCoT2CCNn8DwC&Z*4*Hc5%XD5!5Xkn");
-define("DB_TABLE", "allegro");
+define("DB_DATABASE", "allegro");
