@@ -5,13 +5,9 @@ require "database.php";
 
 class Model{
 
-    function __construct($fields = [], $migration = false){
-        
-        if(!$migration){
+    function __construct($fields = []){
 
-            foreach($this as $key => $value) $this->$key = null; //clear property values
-            foreach($fields as $key => $value) $this->$key = $value; //
-        }
+        foreach($fields as $key => $value) $this->$key = $value;
     }
 
     function save(){
@@ -35,9 +31,9 @@ class Model{
     }
 
     static function get($condition, $fields = "*"){
-
-        global $connection;
+        //returns record satistying condition. returns the first if multiple records exist.
         $query = "SELECT $fields FROM ".get_called_class()." WHERE $condition;";
+        global $connection;
         $result = $connection->query($query);
         $result = $result->fetch_assoc();
         return new (get_called_class())($result);

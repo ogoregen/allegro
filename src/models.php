@@ -5,14 +5,18 @@ require "base/Model.php";
 
 class User extends Model{
 
-    public $id = "INT NOT NULL AUTO_INCREMENT";
-    public $email = "TINYTEXT NOT NULL";
-    public $password = "TINYTEXT NOT NULL";
-    public $firstName = "TINYTEXT NOT NULL";
-    public $lastName = "TINYTEXT NOT NULL";
+    public $id;
+    public $email;
+    public $password;
+    public $firstName;
+    public $lastName;
     
     function fullName(){
 
         return $this->firstName." ".$this->lastName;
     }
 }
+
+/*
+$user = User::get("id = 1", "id, email, firstName, lastName");
+*/

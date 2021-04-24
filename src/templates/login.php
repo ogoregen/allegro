@@ -10,7 +10,7 @@
         <form action="" method="POST">
             <div class="lbr-margin">
                 <label class="lbr-form-label" for="email">E-Mail Address</label>
-                <input class="lbr-input lbr-width-1-1" name="email" type="email" id="email" value="<?php echo $context["autofill"]["email"] ?? "" ?>" required>
+                <input class="lbr-input lbr-width-1-1" name="email" type="email" id="email" value="<?php echo $context["autofill"]["email"] ?? "" ?>" autofocus required>
             </div>
             <div class="lbr-margin">
                 <label class="lbr-form-label" for="password">Password</label>
