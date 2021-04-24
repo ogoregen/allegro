@@ -106,8 +106,8 @@ Steps 1-4 only need to be done once as a configuration
    ```
    to
    ```xml
-   DocumentRoot "C:/xampp/htdocs/allegro/src"
-   <Directory "C:/xampp/htdocs/allegro/src">
+   DocumentRoot "C:/xampp/htdocs/allegro/src/public"
+   <Directory "C:/xampp/htdocs/allegro/src/public">
    ```
 5. Start Apache in XAMPP and open `localhost` or `127.0.0.1` in your browser
 
