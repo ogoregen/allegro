@@ -1,4 +1,4 @@
-Allegro is an asynchronous messaging web application.
+Allegro is an asynchronous messaging web application. Check [wiki](https://github.com/ogoregen/allegro/wiki) for documentation.
 
 ## Dependencies
 
