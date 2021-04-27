@@ -4,7 +4,7 @@ Allegro is an asynchronous messaging web application aimed at students. Check [w
 
 ## Getting Started
 
-[Deployment and Running Locally]https://github.com/ogoregen/allegro/wiki/Deployment-and-Running-Locally)
+[Deployment and Running Locally](https://github.com/ogoregen/allegro/wiki/Deployment-and-Running-Locally)
 
 ## Dependencies
 
