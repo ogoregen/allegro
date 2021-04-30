@@ -10,7 +10,7 @@ require "external/PHPMailer/src/SMTP.php";
 require "external/PHPMailer/src/Exception.php";
 require "config.php";
 
-function sendMail($to, $subject, $body){
+function sendMail($recipients, $subject, $body){
 
     $mail = new PHPMailer(true);
 
@@ -26,7 +26,11 @@ function sendMail($to, $subject, $body){
         $mail->Password = MAIL_PASSWORD;
         $mail->setFrom(MAIL_FROM_ADDR, MAIL_FROM_NAME);
         
-        $mail->addAddress($to);
+        foreach($recipients as $recipient){
+            
+            $mail->addAddress($recipient);
+        }
+        
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body = $body;
