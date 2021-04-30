@@ -5,5 +5,5 @@ CREATE TABLE User (
   username VARCHAR(255) NOT_NULL,
   password VARCHAR(60) NOT_NULL,
   firstName VARCHAR(255) NOT_NULL,
-  lastName VARCHAR(255) NOT_NULL,
+  lastName VARCHAR(255) NOT_NULL
 )
