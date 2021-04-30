@@ -17,7 +17,7 @@ function getMessages(){
     if(isset($_COOKIE["messages"])){
 
         $messages = json_decode($_COOKIE["messages"], true);
-        setcookie("messages", "", -1); //discard read messages
+        setcookie("messages", "", -1); //delete read messages
     }
     return $messages ?? [];
 }
