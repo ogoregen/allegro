@@ -11,4 +11,4 @@ CREATE TABLE User (
   password VARCHAR(60) NOT_NULL,
   firstName VARCHAR(255) NOT_NULL,
   lastName VARCHAR(255) NOT_NULL
-)
+);
