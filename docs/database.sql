@@ -1,8 +1,11 @@
 
 CREATE DATABASE allegro;
+
 CREATE USER 'allegro'@'localhost' IDENTIFIED BY 'IDsvW.A!j*XajZ1t';
 GRANT ALL PRIVILEGES ON allegro.* TO 'allegro'@'localhost';
 FLUSH PRIVILEGES;
+
+USE allegro;
 
 CREATE TABLE User (
   id INT(11) AUTO_INCREMENT PRIMARY KEY,
