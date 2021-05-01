@@ -7,7 +7,7 @@ FLUSH PRIVILEGES;
 
 USE allegro;
 
-CREATE TABLE 'allegro'.user (
+CREATE TABLE allegro.user (
   id INT(11) AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(255) NOT NULL,
   username VARCHAR(255) NOT NULL,
