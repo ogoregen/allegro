@@ -14,24 +14,35 @@
                 <?php renderFieldError($context["errors"]["name"] ?? null) ?>
             </div>
             <div class="lbr-margin">
+                <label class="lbr-form-label" for="username">Username</label>
+                <input class="lbr-input lbr-width-1-1" name="username" type="text" id="username" value="<?php echo $context["autofill"]["username"] ?? "" ?>" required>
+                <?php renderFieldError($context["errors"]["username"] ?? null) ?>
+            </div>
+            <div class="lbr-margin">
                 <label class="lbr-form-label" for="email">E-Mail Address</label>
-                <input class="lbr-input lbr-width-1-1 <?php if(isset($context["errors"]["email"])) echo 'lbr-form-error' ?>" name="email" type="email" id="email" value="<?php echo $context["autofill"]["email"] ?? "" ?>" required>
+                <input class="lbr-input lbr-width-1-1" name="email" type="email" id="email" value="<?php echo $context["autofill"]["email"] ?? "" ?>" required>
                 <?php renderFieldError($context["errors"]["email"] ?? null) ?>
             </div>
             <div class="lbr-margin">
                 <label class="lbr-form-label" for="password">Password</label>
                 <input class="lbr-input lbr-width-1-1" name="password" type="password" id="password" minlength="8" required>
+                <label class="lbr-form-label"><input class="lbr-checkbox" type="checkbox" onclick="toggleFieldVisibility(document.getElementById('password'));"> Show password</label>
                 <?php renderFieldError($context["errors"]["password"] ?? null) ?>
             </div>
-            <div class="lbr-margin">
-                <label class="lbr-form-label" for="passwordConfirmation">Password, again</label>
-                <input class="lbr-input lbr-width-1-1" name="passwordConfirmation" type="password" id="passwordConfirmation" minlength="8" required>
-                <?php renderFieldError($context["errors"]["passwordConfirmation"] ?? null) ?>
-            </div>
             <button class="lbr-button lbr-button-default" type="submit">Sign Up</button>
+            <p class="lbr-margin-bottom-0">Already have an account? <a href="/login">Log in</a> instead.</p>
         </form>
     </div>
 </div>
+
+<script>
+
+function toggleFieldVisibility(field){
+
+    field.type = field.type == "password" ? "text" : "password";
+}
+
+</script>
 
 <?php 
 

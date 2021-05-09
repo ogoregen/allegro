@@ -4,18 +4,19 @@
 // views represent pages, and fill and render templates
 // to add a view, create a function that calls render() or redirects to another view and add it to the urls array in urls.php
 
-require "base/renderer.php";
+require "core/template.php";
 require "models.php";
 
 //base:
 
 function dashboard(){
 
+    if(!isset($_SESSION["is_authenticated"])) header("Location: /login");
     $context = [
 
         "title" => "Home",
         "metaDescription" => "",
-        "userID " => $_SESSION["userID"]
+        "session" => $_SESSION
     ];
     render("dashboard.php", $context);
 }
@@ -54,25 +55,17 @@ function register(){
             $errors["password"] = "Password is too short.";
             $failed = true;
         }
-        if($_POST["password"] != $_POST["passwordConfirmation"]){
-
-            $errors["passwordConfirmation"] = "Passwords do not match.";
-            $failed = true;
-        }
         if(!$failed){ //register
 
             $user = new User();
             $user->email = $_POST["email"];
+            $user->username = $_POST["username"];
             $user->password = password_hash($_POST["password"], PASSWORD_BCRYPT);
             $firstName = implode(" ", explode(" ", $_POST["name"], -1));
             $lastName =  substr($_POST["name"], strrpos($_POST["name"], " ") + 1);
             $user->save();
             //todo: create success message
-            //login right away:
-            $user = User::get("email = $user->email");
-            $_SESSION["is_authenticated"] = true;
-            $_SESSION["userID"] = $user->id;
-            header("Location: /");
+            login();
         }
     }
     $context = [
@@ -87,13 +80,13 @@ function register(){
 
 function login(){
 
-    if($_SESSION["is_authenticated"]) header("Location: /");
+    if(isset($_SESSION["is_authenticated"])) header("Location: /");
     $autofill = [];
     $errors = [];
     if($_SERVER["REQUEST_METHOD"] === "POST"){
 
         $user = User::get("email = '".$_POST['email']."'");
-        if(is_null($user) || !password_verify($_POST["password"], $user->password)){
+        if(!$user || !password_verify($_POST["password"], $user->password)){
 
             $errors["form"] = "Wrong credentials.";
             $autofill["email"] = $_POST["email"];
@@ -101,7 +94,8 @@ function login(){
         else{
 
             $_SESSION["is_authenticated"] = true;
-            $_SESSION["userID"] = $user->id;
+            $_SESSION["id"] = $user->id;
+            $_SESSION["username"] = $user->username;
             header("Location: /");
         }
     }

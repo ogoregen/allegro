@@ -1,12 +1,13 @@
 
 <?php
 
-require "base/Model.php";
+require "core/Model.php";
 
 class User extends Model{
 
     public $id;
     public $email;
+    public $username;
     public $password;
     public $firstName;
     public $lastName;
@@ -17,6 +18,12 @@ class User extends Model{
     }
 }
 
-/*
-$user = User::get("id = 1", "id, email, firstName, lastName");
-*/
+class Message extends Model{
+
+    public $id;
+    public $creationDatetime;
+    public $author;
+    public $recipients;
+    public $subject;
+    public $body;
+}
