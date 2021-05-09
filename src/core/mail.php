@@ -5,9 +5,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-require "external/PHPMailer/src/PHPMailer.php";
-require "external/PHPMailer/src/SMTP.php";
-require "external/PHPMailer/src/Exception.php";
+require "vendor/PHPMailer/src/PHPMailer.php";
+require "vendor/PHPMailer/src/SMTP.php";
+require "vendor/PHPMailer/src/Exception.php";
 require "config.php";
 
 function sendMail($recipients, $subject, $body){
