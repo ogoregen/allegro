@@ -3,7 +3,7 @@
 
 require "database.php";
 
-class Model{
+abstract class Model{
 
     function __construct($fields = []){
 
@@ -31,6 +31,20 @@ class Model{
             $query .= " WHERE id = $this->id;";
         }
         else $query = "INSERT INTO ".get_class($this)." (".implode(", ", array_keys($data)).") VALUES ('".implode("', '", array_values($data))."');"; //create if does not exist
+        global $connection;
+        $connection->query($query);
+    }
+
+    function delete(){
+        //deletes the record
+        $query = "DELETE FROM ".get_class($this)." WHERE id = $this->id;";
+        global $connection;
+        $connection->query($query);
+    }
+
+    static function deleteWhere($condition){
+        //deletes all records satisfying condition
+        $query = "DELETE FROM ".get_called_class()." WHERE $condition;";
         global $connection;
         $connection->query($query);
     }
@@ -65,7 +79,7 @@ class Model{
 
         $query = "SELECT EXISTS(SELECT * FROM ".get_called_class()." WHERE $condition LIMIT 1);";
         $result = self::fetch($query);
-        return (bool)$result[0];
+        return $result[0][0];
     }
 
     private static function fetch($query, $resultType = MYSQLI_NUM){
