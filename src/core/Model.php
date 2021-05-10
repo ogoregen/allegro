@@ -51,7 +51,7 @@ abstract class Model{
 
     static function get($condition, $fields = "*"){
         //returns the object matching given condition
-        $query = "SELECT $fields FROM ".get_called_class()." WHERE $condition LIMIT 1;";
+        $query = "SELECT $fields FROM ".get_called_class()." WHERE $condition;";
         $result = self::fetch($query, MYSQLI_ASSOC);
         if($result){
 
