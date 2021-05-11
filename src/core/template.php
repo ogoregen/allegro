@@ -1,4 +1,3 @@
-
 <?php
 
 function render($template, $context = []){

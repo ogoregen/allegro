@@ -1,4 +1,3 @@
-
 <?php
 
 define("MAIL_PORT", 465);
