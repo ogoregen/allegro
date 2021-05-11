@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Model Class
+ * 
+ * Interact with database tables.
+ * 
+ * The Model class is an abstract class that facilitates
+ * database operations. Each child class represents a
+ * database table, and their instances represent
+ * database rows.
+ */
+
 require "Database.php";
 
 abstract class Model{
@@ -29,24 +40,36 @@ abstract class Model{
             }
             $query .= " WHERE id = $this->id;";
         }
-        else $query = "INSERT INTO ".get_class($this)." (".implode(", ", array_keys($data)).") VALUES ('".implode("', '", array_values($data))."');"; //create if does not exist
+        else{ //create if does not exist
+        
+            $query = "INSERT INTO ".get_class($this)." (".implode(", ", array_keys($data)).") VALUES ('".implode("', '", array_values($data))."');";
+        }
         Database::getInstance()->query($query);
     }
 
+    /**
+     * Delete the record.
+     */
     function delete(){
-        //deletes the record
+
         $query = "DELETE FROM ".get_class($this)." WHERE id = $this->id;";
         Database::getInstance()->query($query);
     }
 
+    /**
+     * Delete records satisfying condition.
+     */
     static function deleteWhere($condition){
-        //deletes all records satisfying condition
+
         $query = "DELETE FROM ".get_called_class()." WHERE $condition;";
         Database::getInstance()->query($query);
     }
 
+    /**
+     * Fetch the record satisfying condition.
+     */
     static function get($condition, $fields = "*"){
-        //returns the object matching given condition
+
         $query = "SELECT $fields FROM ".get_called_class()." WHERE $condition;";
         $result = Database::getInstance()->fetch($query, MYSQLI_ASSOC);
         if($result){
@@ -57,8 +80,11 @@ abstract class Model{
         return null;
     }
 
+    /**
+     * Fetch all records satisfying condition.
+     */
     static function filter($condition = "", $fields = "*"){
-        //returns an object array of all records of the model matching given condition
+
         if($condition) $condition = " WHERE ".$condition;
         $query = "SELECT $fields FROM ".get_called_class()."$condition;";
         $result = Database::getInstance()->fetch($query, MYSQLI_ASSOC);
@@ -66,8 +92,11 @@ abstract class Model{
         return [];
     }
 
+    /**
+     * Fetch all records.
+     */
     static function all($fields = "*"){
-        //returns an object array of all records of the model
+
         return self::filter(fields: $fields);
     }
 

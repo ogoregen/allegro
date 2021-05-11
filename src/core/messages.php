@@ -1,7 +1,10 @@
 <?php
 
+/**
+ * Create cookie-based messages that can be retrieved after redirecting.
+ */
 function addMessage($level, $body){
-    //creates cookie-based messages that can be retrieved after redirecting
+
     if(isset($_COOKIE["messages"])) $messages = json_decode($_COOKIE["messages"]); //retrieve existing messages
     $messages[] = [
         //add to the end of messages array

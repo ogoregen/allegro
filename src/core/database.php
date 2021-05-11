@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Database Class
+ * 
+ * Initiate and facilitate mysqli connection.
+ * 
+ * The Database class is a singleton that holds
+ * a mysqli connection object and provides methods
+ * for interacting with it.
+ */
+
 require "config.php";
 
 class Database{
@@ -12,9 +22,12 @@ class Database{
         $this->connection = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
     }
 
+    /**
+     * Return the single instance creating it if it does not exist.
+     */
     static function getInstance(){
 
-        if(!isset($instance)) $instance = new Database();
+        if(!isset($instance)) $instance = new self();
         return $instance;
     }
     
