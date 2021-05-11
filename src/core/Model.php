@@ -48,11 +48,7 @@ abstract class Model{
     static function get($condition, $fields = "*"){
         //returns the object matching given condition
         $query = "SELECT $fields FROM ".get_called_class()." WHERE $condition;";
-<<<<<<< Updated upstream
-        $result = self::_fetch($query, MYSQLI_ASSOC);
-=======
         $result = Database::getInstance()->fetch($query, MYSQLI_ASSOC);
->>>>>>> Stashed changes
         if($result){
 
             if(count($result) > 1) throw new Exception("Multiple results");
@@ -65,11 +61,7 @@ abstract class Model{
         //returns an object array of all records of the model matching given condition
         if($condition) $condition = " WHERE ".$condition;
         $query = "SELECT $fields FROM ".get_called_class()."$condition;";
-<<<<<<< Updated upstream
-        $result = self::_fetch($query, MYSQLI_ASSOC);
-=======
         $result = Database::getInstance()->fetch($query, MYSQLI_ASSOC);
->>>>>>> Stashed changes
         if($result) return array_map(fn($x) => new (get_called_class())($x), $result); 
         return [];
     }
@@ -82,20 +74,7 @@ abstract class Model{
     static function exists($condition){
 
         $query = "SELECT EXISTS(SELECT * FROM ".get_called_class()." WHERE $condition LIMIT 1);";
-<<<<<<< Updated upstream
-        $result = self::_fetch($query);
-        return $result[0][0];
-    }
-
-    private static function _fetch($query, $resultType = MYSQLI_NUM){
-
-        global $connection;
-        $result = $connection->query($query);
-        return $result->fetch_all($resultType);
-    } 
-=======
         $result = Database::getInstance()->fetch($query);
         return $result[0][0];
     }
->>>>>>> Stashed changes
 }
