@@ -1,4 +1,3 @@
-
 <?php
 
 $urls = [
@@ -8,4 +7,5 @@ $urls = [
     "/login" => "login",
     "/logout" => "logout",
     "/404" => "_404",
+    "/test" => "test"
 ];
