@@ -10,7 +10,7 @@
  * for interacting with it.
  */
 
-require "config.php";
+require_once "config.php";
 
 class Database{
 
@@ -23,7 +23,9 @@ class Database{
     }
 
     /**
-     * Return the single instance creating it if it does not exist.
+     * Return the single instance, create if does not exist.
+     * 
+     * @return Database
      */
     static function getInstance(){
 
@@ -31,11 +33,26 @@ class Database{
         return $instance;
     }
     
+    /**
+     * Perform database query.
+     * 
+     * @param string $query MySQL query
+     * 
+     * @return mysqli_result|bool
+     */
     function query($query){
 
         return $this->connection->query($query);
     }
 
+    /**
+     * Perform database query and fetch all results.
+     * 
+     * @param string $query MySQL query
+     * @param int $resultType mysqli result mode constant
+     * 
+     * @return mysqli_result|bool
+     */
     function fetch($query, $resultType = MYSQLI_NUM){
 
         $result = $this->query($query);

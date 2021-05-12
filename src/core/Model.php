@@ -11,7 +11,7 @@
  * database rows.
  */
 
-require "Database.php";
+require_once "Database.php";
 
 abstract class Model{
 
@@ -25,6 +25,9 @@ abstract class Model{
         throw new Exception("Cannot add new property \$$name to instance of Model.");
     }
 
+    /**
+     * Create database record. Update if already exists.
+     */
     function save(){
 
         $data = (array)$this;
@@ -58,6 +61,8 @@ abstract class Model{
 
     /**
      * Delete records satisfying condition.
+     * 
+     * @param string $condition Conditions in SQL format separated by commas
      */
     static function deleteWhere($condition){
 
@@ -67,6 +72,13 @@ abstract class Model{
 
     /**
      * Fetch the record satisfying condition.
+     * 
+     * @param string $condition Conditions in SQL format separated by commas
+     * @param string $fields Property names separated by commas
+     * 
+     * @throws Exception
+     * 
+     * @return Model|null
      */
     static function get($condition, $fields = "*"){
 
@@ -82,6 +94,11 @@ abstract class Model{
 
     /**
      * Fetch all records satisfying condition.
+     * 
+     * @param string $condition Conditions in SQL format separated by commas
+     * @param string $fields Property names separated by commas
+     * 
+     * @return array Array of instances or empty array
      */
     static function filter($condition = "", $fields = "*"){
 
@@ -94,12 +111,23 @@ abstract class Model{
 
     /**
      * Fetch all records.
+     * 
+     * @param string $fields Property names separated by commas
+     * 
+     * @return array Array of instances or empty array
      */
     static function all($fields = "*"){
 
         return self::filter(fields: $fields);
     }
 
+    /**
+     * Check if a record satisfying condition exists.
+     * 
+     * @param string $condition Conditions in SQL format separated by commas
+     * 
+     * @return bool
+     */
     static function exists($condition){
 
         $query = "SELECT EXISTS(SELECT * FROM ".get_called_class()." WHERE $condition LIMIT 1);";

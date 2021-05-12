@@ -1,11 +1,11 @@
-
 <?php
 
 // views represent pages, and fill and render templates
 // to add a view, create a function that calls render() or redirects to another view and add it to the urls array in urls.php
 
-require "core/template.php";
-require "models.php";
+require_once "core/template.php";
+require_once "core/mail.php";
+require_once "models.php";
 
 //base:
 
