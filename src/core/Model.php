@@ -62,7 +62,7 @@ abstract class Model{
     /**
      * Delete records satisfying condition.
      * 
-     * @param string $condition Conditions in SQL format separated by commas
+     * @param string $condition Conditions in SQL format
      */
     static function deleteWhere($condition){
 
@@ -73,7 +73,7 @@ abstract class Model{
     /**
      * Fetch the record satisfying condition.
      * 
-     * @param string $condition Conditions in SQL format separated by commas
+     * @param string $condition Conditions in SQL format
      * @param string $fields Property names separated by commas
      * 
      * @throws Exception
@@ -95,7 +95,7 @@ abstract class Model{
     /**
      * Fetch all records satisfying condition.
      * 
-     * @param string $condition Conditions in SQL format separated by commas
+     * @param string $condition Conditions in SQL format
      * @param string $fields Property names separated by commas
      * 
      * @return array Array of instances or empty array
