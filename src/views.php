@@ -132,3 +132,7 @@ function _404(){
     ];
     render("404.php", $context);
 }
+function settings(){
+
+  render("register.php");
+}
