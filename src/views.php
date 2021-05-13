@@ -13,7 +13,9 @@ require_once "models.php";
 use function Allegro\Core\template\render;
 
 //base:
-
+function settings(){
+  render("settings.php", ["title" => "Settings"]);
+}
 function dashboard(){
 
     if(!isset($_SESSION["is_authenticated"])) header("Location: /login");
@@ -132,8 +134,4 @@ function _404(){
     ];
     render("404.php", $context);
 }
-function settings(){
 
-  render("settings.php");
-  render("settings.php", ["title" => "Settings"]);
-}
