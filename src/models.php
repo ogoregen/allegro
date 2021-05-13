@@ -2,6 +2,8 @@
 
 require_once "core/Model.php";
 
+use Allegro\Core\Model;
+
 class User extends Model{
 
     public $id;

@@ -6,6 +6,5 @@ $urls = [
     "/register" => "register",
     "/login" => "login",
     "/logout" => "logout",
-    "/404" => "_404",
-    "/test" => "test"
+    "/404" => "_404"
 ];

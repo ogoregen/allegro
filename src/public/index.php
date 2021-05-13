@@ -1,13 +1,12 @@
-
 <?php
 
 //calls correct view depending on url
 
-session_set_cookie_params(2147483647); //maximum cookie lifespan
-session_start();
-
 require "../urls.php";
 require "../views.php";
+
+session_set_cookie_params(2147483647); //maximum cookie lifespan
+session_start();
 
 $uri = filter_var($_SERVER["REQUEST_URI"], FILTER_SANITIZE_URL);
 

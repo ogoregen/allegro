@@ -11,6 +11,8 @@
  * database rows.
  */
 
+namespace Allegro\Core;
+
 require_once "Database.php";
 
 abstract class Model{
@@ -62,7 +64,7 @@ abstract class Model{
     /**
      * Delete records satisfying condition.
      * 
-     * @param string $condition Conditions in SQL format
+     * @param string $condition Condition in SQL format
      */
     static function deleteWhere($condition){
 
@@ -95,7 +97,7 @@ abstract class Model{
     /**
      * Fetch all records satisfying condition.
      * 
-     * @param string $condition Conditions in SQL format
+     * @param string $condition Condition in SQL format
      * @param string $fields Property names separated by commas
      * 
      * @return array Array of instances or empty array
@@ -124,7 +126,7 @@ abstract class Model{
     /**
      * Check if a record satisfying condition exists.
      * 
-     * @param string $condition Conditions in SQL format separated by commas
+     * @param string $condition Condition in SQL format
      * 
      * @return bool
      */

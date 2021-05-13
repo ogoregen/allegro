@@ -10,6 +10,8 @@ require_once "core/template.php";
 require_once "core/mail.php";
 require_once "models.php";
 
+use function Allegro\Core\template\render;
+
 //base:
 
 function dashboard(){

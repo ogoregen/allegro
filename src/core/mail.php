@@ -1,9 +1,15 @@
 <?php
 
+/**
+ * Minimal wrapping of PHPMailer and other mail utility
+ */
+
+namespace Allegro\Core;
+
 require_once "vendor/PHPMailer/src/PHPMailer.php";
 require_once "vendor/PHPMailer/src/SMTP.php";
 require_once "vendor/PHPMailer/src/Exception.php";
-require_once "config.php";
+require_once "../config/credentials.php";
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -26,11 +32,11 @@ function sendMail($recipients, $subject, $body){
     $mail->SMTPAuth = true;
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     
-    $mail->Port = MAIL_PORT;
     $mail->Host = MAIL_HOST;
-    $mail->Username = MAIL_USERNAME;
-    $mail->Password = MAIL_PASSWORD;
-    $mail->setFrom(MAIL_FROM_ADDR, MAIL_FROM_NAME);
+    $mail->Port = MAIL_PORT;
+    $mail->Username = MAIL_USER;
+    $mail->Password = MAIL_PASS;
+    $mail->setFrom(MAIL_FROM_MAIL, MAIL_FROM_NAME);
     
     foreach($recipients as $recipient){
         

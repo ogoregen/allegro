@@ -10,7 +10,9 @@
  * for interacting with it.
  */
 
-require_once "config.php";
+namespace Allegro\Core;
+
+require_once "../config/credentials.php";
 
 class Database{
 
@@ -19,7 +21,7 @@ class Database{
 
     private function __construct(){
 
-        $this->connection = mysqli_connect(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+        $this->connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     }
 
     /**
