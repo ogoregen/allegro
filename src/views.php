@@ -134,5 +134,5 @@ function _404(){
 }
 function settings(){
 
-  render("settings.php");
+  render("register.php");
 }
