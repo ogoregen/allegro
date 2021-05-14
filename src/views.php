@@ -12,20 +12,25 @@ require_once "models.php";
 
 use function Allegro\Core\template\render;
 
-//base:
-function settings(){
-  render("settings.php", ["title" => "Settings"]);
+function landing(){
+
+    render("landingpage.php");
 }
+
 function dashboard(){
 
     if(!isset($_SESSION["is_authenticated"])) header("Location: /login");
     $context = [
-
         "title" => "Home",
         "metaDescription" => "",
-        "session" => $_SESSION
+        "session" => $_SESSION,
     ];
     render("dashboard.php", $context);
+}
+
+function settings(){
+    
+    render("settings.php", ["title" => "Settings"]);
 }
 
 //authentication:
@@ -76,11 +81,10 @@ function register(){
         }
     }
     $context = [
-
         "title" => "Sign Up",
         "metaDescription" => "",
         "autofill" => $autofill,
-        "errors" => $errors
+        "errors" => $errors,
     ];
     render("register.php", $context);
 }
@@ -107,11 +111,10 @@ function login(){
         }
     }
     $context = [
-
         "title" => "Log In",
         "metaDescription" => "",
         "autofill" => $autofill,
-        "errors" => $errors
+        "errors" => $errors,
     ];
     render("login.php", $context);
 }
@@ -129,8 +132,7 @@ function _404(){
 
     http_response_code(404);
     $context = [
-
-        "title" => "Not found."
+        "title" => "Not found.",
     ];
     render("404.php", $context);
 }

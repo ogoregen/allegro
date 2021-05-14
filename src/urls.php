@@ -1,11 +1,12 @@
 <?php
 
 $urls = [
-    //uri => view
+  //"/path" => "view",
     "/" => "dashboard", 
     "/register" => "register",
     "/login" => "login",
     "/logout" => "logout",
-    "/404" => "_404
-    "/settings" => "settings"
+    "/404" => "_404",
+    "/settings" => "settings",
+    "/landing" => "landing",
 ];
