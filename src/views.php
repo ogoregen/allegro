@@ -20,10 +20,12 @@ function landing(){
 function dashboard(){
 
     if(!isset($_SESSION["is_authenticated"])) header("Location: /login");
+    $users = User::all("id, firstName,lastName, username, email");
     $context = [
         "title" => "Home",
         "metaDescription" => "",
         "session" => $_SESSION,
+        "users" => $users,
     ];
     render("dashboard.php", $context);
 }
