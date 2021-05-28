@@ -1,0 +1,154 @@
+
+/* padding */
+
+.lbr-padding-horizontal{
+    padding-left: var(--lbr-padding);
+    padding-right: var(--lbr-padding);
+}
+
+.lbr-margin-small{
+    margin: var(--lbr-margin-small);
+}
+
+html, body{
+    margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6, .lbr-logo{
+    font-family: league_spartanbold;
+
+}
+
+.lbr-heading{
+    font-family: league_spartanbold;
+    font-size: 4rem;
+    line-height: 0.97;
+}
+
+.lbr-text-lead{
+    font-size: 1.5rem;
+}
+
+::selection,
+::-moz-selection{ 
+    background-color: rgba(252, 62, 107, 0.4);
+    color: #02040F;
+}
+
+
+.lead{
+    font-family: league_spartanbold;
+
+}
+
+.lbr-logo{
+    color: #fc3e6b;
+    font-size: 2rem;
+    text-decoration: none;
+    font-weight: 900;
+}
+
+.lbr-bg{
+
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.com/svgjs' width='2000' height='1080' preserveAspectRatio='none' viewBox='0 0 2000 1080'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1084%26quot%3b)' fill='none'%3e%3cpath d='M268.83177902227317 479.1304558198988L379.34645535126737 606.2630480030292 506.47904753439775 495.74837167403507 395.96437120540355 368.61577949090463z' fill='rgba(252%2c 62%2c 107%2c 0.7)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M1045.924321082952 709.1033892726513L1135.0012843267841 863.3892153949139 1289.2871104490468 774.3122521510817 1200.2101472052145 620.0264260288191z' fill='rgba(252%2c 62%2c 107%2c 0.7)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M125.426%2c330.296C160.567%2c328.981%2c185.627%2c301.126%2c204.181%2c271.253C224.218%2c238.993%2c245.367%2c200.385%2c226.629%2c167.354C207.756%2c134.084%2c163.649%2c130.975%2c125.426%2c132.423C90.356%2c133.752%2c55.133%2c144.693%2c36.686%2c174.549C17.342%2c205.857%2c17.534%2c245.58%2c35.753%2c277.556C54.153%2c309.849%2c88.285%2c331.686%2c125.426%2c330.296' fill='rgba(252%2c 62%2c 107%2c 0.7)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M1350.16 316.97 a292.31 292.31 0 1 0 584.62 0 a292.31 292.31 0 1 0 -584.62 0z' fill='rgba(252%2c 62%2c 107%2c 0.7)' class='triangle-float1'%3e%3c/path%3e%3cpath d='M1677.1800819887076 882.0328970455492L1864.0507568769142 659.759641297838 1614.8685485228207 611.3235266063499z' fill='rgba(252%2c 62%2c 107%2c 0.7)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M-83.12976717637363 484.55961478980845L21.25925020350641 665.3666966439511 202.06633205764902 560.977679264071 97.67731467776895 380.1705974099284z' fill='rgba(252%2c 62%2c 107%2c 0.7)' class='triangle-float3'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1084'%3e%3crect width='2000' height='1080' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e");
+}
+
+.lbr-nav{
+    border-bottom: 1px solid #181818;
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: var(--lbr-padding-small) var(--lbr-padding) var(--lbr-padding-small) var(--lbr-padding);
+}
+
+.lbr-border-right{
+    border-right: 1px solid #181818;
+}
+
+.lbr-width-1-4{
+    width: 25%;
+}
+
+.lbr-width-1-5{
+    width: 20%;
+}
+
+/* margin */
+.lbr-margin{
+    margin-bottom: var(--lbr-margin);
+}
+
+* + .lbr-margin{
+    margin-top: var(--lbr-margin) !important;
+}
+
+.lbr-margin-0{
+    margin: 0;
+}
+
+.lbr-margin-0-top{
+    margin-top: 0;
+}
+
+.lbr-margin-0-bottom{
+    margin-bottom: 0;
+}
+
+.lbr-margin-0-left{
+    margin-left: 0;
+}
+
+.lbr-margin-0-right{
+    margin-right: 0;
+}
+
+/* padding */
+.lbr-padding{
+    padding: var(--lbr-padding);
+}
+
+/** container */
+.lbr-container{
+
+    width: 60%;
+    margin: auto;
+}
+
+.lbr-container-small{
+
+    width: 50%;
+    margin: auto;
+}
+
+@media only screen and (max-width: 768px){
+
+    .lbr-container, .lbr-container-small{
+
+        width: 100%;
+    }
+}
+
+/* form */
+.lbr-button{
+    font-weight: 900;
+    line-height: 1.3;
+    background-color: inherit;
+    padding: 12px;
+    border-radius: 40px;
+    border: 1px solid #fc3e6b;
+    font-size: 1rem;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.lbr-button:hover{
+    color: #fc3e6b;
+    cursor: pointer;
+}
+
+.lbr-button-primary{
+    background-color: #fd7797;
+    color: #000;
+}
+
+.lbr-button-primary:hover{
+    color: #fff;
+}

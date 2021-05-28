@@ -1,4 +1,3 @@
-
 <div class="lbr-height-viewport lbr-flex lbr-flex-center lbr-flex-middle lbr-padding">
     <div class="lbr-section lbr-width-1-4">
         <h1 style="margin-top: 0;">Sign Up</h1>

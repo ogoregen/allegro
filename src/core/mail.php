@@ -9,7 +9,7 @@ namespace Allegro\Core;
 require_once "vendor/PHPMailer/src/PHPMailer.php";
 require_once "vendor/PHPMailer/src/SMTP.php";
 require_once "vendor/PHPMailer/src/Exception.php";
-require_once "../config/credentials.php";
+require_once __DIR__."/../config/credentials.php";
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;

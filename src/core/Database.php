@@ -12,7 +12,7 @@
 
 namespace Allegro\Core;
 
-require_once "../config/credentials.php";
+require_once __DIR__."/../config/credentials.php";
 
 class Database{
 

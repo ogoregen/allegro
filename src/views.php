@@ -6,134 +6,141 @@
  * or redirects to another view and add it to the urls array in urls.php
  */
 
+require_once "core/view.php";
 require_once "core/template.php";
 require_once "core/mail.php";
 require_once "models.php";
 
 use function Allegro\Core\template\render;
+use function Allegro\Core\view\requirePOST;
+use function Allegro\Core\view\requireAuthentication;
+use function Allegro\Core\view\requireUnauthentication;
+
+function sendMessage(){
+
+	requirePOST();
+}
 
 function landing(){
 
-    render("landingpage.php");
+	$context = [
+	];
+	render("landingpage.php", $context);
 }
 
 function dashboard(){
 
-    if(!isset($_SESSION["is_authenticated"])) header("Location: /login");
-    $context = [
-        "title" => "Home",
-        "metaDescription" => "",
-        "session" => $_SESSION,
-    ];
-    render("dashboard.php", $context);
-}
-
-function settings(){
-    
-    render("settings.php", ["title" => "Settings"]);
+	requireAuthentication();
+	$users = User::all("id, firstName, lastName, username, email");
+	$context = [
+		"title" => "Home",
+		"metaDescription" => "",
+		"session" => $_SESSION,
+		"users" => $users,
+	];
+	render("dashboard.php", $context);
 }
 
 //authentication:
 
 function register(){
-    
-    if(isset($_SESSION["is_authenticated"])) header("Location: /");
-    $autofill = [];
-    $errors = [];
-    if($_SERVER["REQUEST_METHOD"] === "POST"){
+	
+	requireUnauthentication();
+	$autofill = [];
+	$errors = [];
+	if($_SERVER["REQUEST_METHOD"] === "POST"){
 
-        //validate:
-        $failed = false;
-        if(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+		//validate:
+		$failed = false;
+		if(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
 
-            $errors["email"] = "Invaid email address.";
-            $autofill["email"] = $_POST["email"];
-            $failed = true;
-        }
-        else if(User::get("email = '".$_POST["email"]."'")){
+			$errors["email"] = "Invaid email address.";
+			$autofill["email"] = $_POST["email"];
+			$failed = true;
+		}
+		else if(User::get("email = '".$_POST["email"]."'")){
 
-            $errors["email"] = "Already exists.";
-            $autofill["email"] = $_POST["email"];
-            $failed = true;
-        }
-        if(!preg_match("/^[a-zA-Z\'\-\040\.]+$/", $_POST["name"])){
+			$errors["email"] = "Already exists.";
+			$autofill["email"] = $_POST["email"];
+			$failed = true;
+		}
+		if(!preg_match("/^[a-zA-Z\'\-\040\.]+$/", $_POST["name"])){
 
-            $errors["name"] = "Please enter a valid name.";
-            $autofill["name"] = $_POST["name"];
-            $failed = true;
-        }
-        if(strlen($_POST["password"]) < 8){
+			$errors["name"] = "Please enter a valid name.";
+			$autofill["name"] = $_POST["name"];
+			$failed = true;
+		}
+		if(strlen($_POST["password"]) < 8){
 
-            $errors["password"] = "Password is too short.";
-            $failed = true;
-        }
-        if(!$failed){ //register
+			$errors["password"] = "Password is too short.";
+			$failed = true;
+		}
+		if(!$failed){ //register
 
-            $user = new User();
-            $user->email = $_POST["email"];
-            $user->username = $_POST["username"];
-            $user->password = password_hash($_POST["password"], PASSWORD_BCRYPT);
-            $firstName = implode(" ", explode(" ", $_POST["name"], -1));
-            $lastName =  substr($_POST["name"], strrpos($_POST["name"], " ") + 1);
-            $user->save();
-            //todo: create success message
-            login();
-        }
-    }
-    $context = [
-        "title" => "Sign Up",
-        "metaDescription" => "",
-        "autofill" => $autofill,
-        "errors" => $errors,
-    ];
-    render("register.php", $context);
+			$user = new User();
+			$user->email = $_POST["email"];
+			$user->username = $_POST["username"];
+			$user->password = password_hash($_POST["password"], PASSWORD_BCRYPT);
+			$firstName = implode(" ", explode(" ", $_POST["name"], -1));
+			$lastName =  substr($_POST["name"], strrpos($_POST["name"], " ") + 1);
+			$user->save();
+			//todo: create success message
+			login();
+		}
+	}
+	$context = [
+		"title" => "Sign Up",
+		"metaDescription" => "",
+		"autofill" => $autofill,
+		"errors" => $errors,
+	];
+	render("register.php", $context);
 }
 
 function login(){
 
-    if(isset($_SESSION["is_authenticated"])) header("Location: /");
-    $autofill = [];
-    $errors = [];
-    if($_SERVER["REQUEST_METHOD"] === "POST"){
+	requireUnauthentication();
+	$autofill = [];
+	$errors = [];
+	if($_SERVER["REQUEST_METHOD"] === "POST"){
 
-        $user = User::get("email = '".$_POST['email']."'");
-        if(!$user || !password_verify($_POST["password"], $user->password)){
+		$user = User::get("email = '".$_POST['email']."'");
+		if(!$user || !password_verify($_POST["password"], $user->password)){
 
-            $errors["form"] = "Wrong credentials.";
-            $autofill["email"] = $_POST["email"];
-        }
-        else{
+			$errors["form"] = "Wrong credentials.";
+			$autofill["email"] = $_POST["email"];
+		}
+		else{
 
-            $_SESSION["is_authenticated"] = true;
-            $_SESSION["id"] = $user->id;
-            $_SESSION["username"] = $user->username;
-            header("Location: /");
-        }
-    }
-    $context = [
-        "title" => "Log In",
-        "metaDescription" => "",
-        "autofill" => $autofill,
-        "errors" => $errors,
-    ];
-    render("login.php", $context);
+			$_SESSION["is_authenticated"] = true;
+			$_SESSION["id"] = $user->id;
+			$_SESSION["username"] = $user->username;
+			header("Location: /");
+		}
+	}
+	$context = [
+		"title" => "Log In",
+		"metaDescription" => "",
+		"autofill" => $autofill,
+		"errors" => $errors,
+	];
+	render("login.php", $context);
 }
 
 function logout(){
 
-    $_SESSION = [];
-    session_destroy();
-    header("Location: /");
+	$_SESSION = [];
+	session_destroy();
+	header("Location: /");
 }
 
 //error:
 
 function _404(){
 
-    http_response_code(404);
-    $context = [
-        "title" => "Not found.",
-    ];
-    render("404.php", $context);
+	http_response_code(404);
+	$context = [
+		"title" => "Not found.",
+	];
+	render("404.php", $context);
 }
-

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,6 +9,7 @@
         <link rel="stylesheet" href="static/fonts/LeagueSpartanBold/stylesheet.css" type="text/css" charset="utf-8"/>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;800&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/1384a8b81d.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <?php include $template ?>

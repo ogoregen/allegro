@@ -2,8 +2,8 @@
 
 //calls correct view depending on url
 
-require "../urls.php";
-require "../views.php";
+require __DIR__."/../urls.php";
+require __DIR__."/../views.php";
 
 session_set_cookie_params(2147483647); //maximum cookie lifespan
 session_start();
