@@ -77,3 +77,8 @@
         </div>
     </div>
 </div>
+<ul> 
+    <?php foreach($context["users"] as $user): ?>
+        <li><?= $user["username"] ?></li> 
+    <?php endforeach ?> 
+    </ul>
