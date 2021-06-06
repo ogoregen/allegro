@@ -1,5 +1,7 @@
-<?php include "compose.php" ?>
-
+<?php
+include "components/composemodal.php";
+include "components/notificationmodal.php";
+?>
 <div style="height: 100vh; padding: 16px; background: linear-gradient(to left, #606c88, #3f4c6b)">
 
     <div class="lbr-background-default" style="width: 90%; height: 100%; margin: 0 auto; border-radius: 8px 8px 0px 8px; display: flex; flex-direction: column;">
@@ -16,7 +18,7 @@
         <div style="display: flex; height: 100%; flex-grow: 1;">
             <div style="min-width: 250px; height: 100%; display: flex; flex-direction: column; box-shadow: 10px 0 5px -2px aliceblue; z-index: 1;">
                 <div class="lbr-border-right" style="padding: 24px;">
-                    <button class="lbr-button" onclick="document.getElementById('composeModal').hidden = false;" style="width: 100%;">New Message</button>
+                    <button class="lbr-button lbr-button-primary" onclick="document.getElementById('composeModal').hidden = false;" style="width: 100%;">New Message</button>
                 </div>
                 <div class="lbr-tab-vertical-dashed">
                     <button class=" active" style="width: 100%; text-align: left"><i class="fas fa-inbox lbr-margin-small-right"></i>Inbox</button>
@@ -77,8 +79,3 @@
         </div>
     </div>
 </div>
-<ul> 
-    <?php foreach($context["users"] as $user): ?>
-        <li><?= $user["username"] ?></li> 
-    <?php endforeach ?> 
-    </ul>

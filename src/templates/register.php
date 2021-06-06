@@ -1,53 +1,52 @@
-<div class="lbr-height-viewport lbr-flex lbr-flex-center lbr-flex-middle lbr-padding">
-    <div class="lbr-section lbr-width-1-4">
-        <h1 style="margin-top: 0;">Sign Up</h1>
+
+<div class="lbr-height-viewport lbr-background-gradient lbr-flex lbr-flex-vertical">
+    <nav class="lbr-background-default lbr-width-full lbr-padding-small">
+        <div clas="lbr-container lbr-flex lbr-flex-space-between">
+            <a>Allegro</a>
+        </div>
+    </nav>
+    <div class="lbr-container-small lbr-flex lbr-flex-middle lbr-flex-center lbr-flex-expand">
         <?php if(isset($context["errors"]["form"])): ?>
-            <div class="lbr-alert lbr-alert-error">
-                <p><?php echo $context["errors"]["form"] ?></p>
+            <div class="lbr-margin lbr-alert lbr-alert-error">
+                <p><?= $context["errors"]["form"] ?></p>
             </div>
         <?php endif ?>
+        <div class="lbr-section lbr-width-full">
+            <h1 class="lbr-margin-0-top lbr-margin">Sign Up</h1>
         <form action="" method="POST">
             <div class="lbr-margin">
-                <label class="lbr-form-label" for="name">Full Name</label>
-                <input class="lbr-input lbr-width-1-1" name="name" type="text" id="name" value="<?php echo $context["autofill"]["name"] ?? "" ?>" autofocus required>
-                <?php renderFieldError($context["errors"]["name"] ?? null) ?>
+                <label class="lbr-label" for="name">Full Name</label>
+                <input name="name" type="text" class="lbr-input lbr-width-full lbr-padding-small-vertical" id="name" value="<?= $context["autofill"]["name"] ?? "" ?>" autofocus required>
+                <?php if(isset($context["errors"]["name"])): ?>
+                    <div class="lbr-text-error lbr-margin-small"><?= $context["errors"]["name"] ?></div>
+                <?php endif ?>
             </div>
             <div class="lbr-margin">
-                <label class="lbr-form-label" for="username">Username</label>
-                <input class="lbr-input lbr-width-1-1" name="username" type="text" id="username" value="<?php echo $context["autofill"]["username"] ?? "" ?>" required>
-                <?php renderFieldError($context["errors"]["username"] ?? null) ?>
+                <label class="lbr-label" for="username">Username</label>
+                <input name="username" type="text" class="lbr-input lbr-width-full lbr-padding-small-vertical" id="username" value="<?= $context["autofill"]["username"] ?? "" ?>" required>
+                <?php if(isset($context["errors"]["username"])): ?>
+                    <div class="lbr-text-error lbr-margin-small"><?= $context["errors"]["username"] ?></div>
+                <?php endif ?>
             </div>
             <div class="lbr-margin">
-                <label class="lbr-form-label" for="email">E-Mail Address</label>
-                <input class="lbr-input lbr-width-1-1" name="email" type="email" id="email" value="<?php echo $context["autofill"]["email"] ?? "" ?>" required>
-                <?php renderFieldError($context["errors"]["email"] ?? null) ?>
+                <label class="lbr-label" for="email">E-Mail Address</label>
+                <input name="email" type="email" class="lbr-input lbr-width-full lbr-padding-small-vertical" id="email" value="<?= $context["autofill"]["email"] ?? "" ?>" required>
+                <?php if(isset($context["errors"]["email"])): ?>
+                    <div class="lbr-text-error lbr-margin-small"><?= $context["errors"]["email"] ?></div>
+                <?php endif ?>
             </div>
             <div class="lbr-margin">
-                <label class="lbr-form-label" for="password">Password</label>
-                <input class="lbr-input lbr-width-1-1" name="password" type="password" id="password" minlength="8" required>
-                <label class="lbr-form-label"><input class="lbr-checkbox" type="checkbox" onclick="toggleFieldVisibility(document.getElementById('password'));"> Show password</label>
-                <?php renderFieldError($context["errors"]["password"] ?? null) ?>
+                <label class="lbr-label" for="password">Password</label>
+                <input name="password" type="password" class="lbr-input lbr-width-full lbr-padding-small-vertical" id="password" minlength="8" required>
+                <label class="lbr-label lbr-margin-small"><input type="checkbox" class="lbr-checkbox lbr-margin-0-left" onclick="toggleInputVisibility(document.getElementById('password'));"> Show password</label>
+                <?php if(isset($context["errors"]["password"])): ?>
+                    <div class="lbr-text-error lbr-margin-small"><?= $context["errors"]["password"] ?></div>
+                <?php endif ?>
             </div>
-            <button class="lbr-button lbr-button-default" type="submit">Sign Up</button>
-            <p class="lbr-margin-bottom-0">Already have an account? <a href="/login">Log in</a> instead.</p>
+            <button class="lbr-button lbr-button-primary lbr-margin-small" type="submit">Sign Up</button>
+            <p class="lbr-margin-0-bottom">Already have an account? <a href="/login">Log in</a>.</p>
         </form>
     </div>
 </div>
 
-<script>
-
-function toggleFieldVisibility(field){
-
-    field.type = field.type == "password" ? "text" : "password";
-}
-
-</script>
-
-<?php 
-
-function renderFieldError($message){
-
-    if(isset($message)) echo "<p class='lbr-text-error lbr-margin-0'>$message</p>";
-}
-
-?>
+<script src="static/js/utils.js"></script>

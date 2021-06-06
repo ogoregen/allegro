@@ -17,123 +17,129 @@ require_once "Database.php";
 
 abstract class Model{
 
-    function __construct($fields = []){
+	function __construct($fields = []){
 
-        foreach($fields as $key => $value) $this->$key = $value;
-    }
+		foreach($fields as $key => $value) $this->$key = $value;
+	}
 
-    function __set($name, $value){
+	function __set($name, $value){
 
-        throw new Exception("Cannot add new property \$$name to instance of Model.");
-    }
+		throw new Exception("Cannot add new property \$$name to instance of Model.");
+	}
 
-    /**
-     * Create database record. Update if already exists.
-     */
-    function save(){
+	/**
+	 * Create database record. Update if already exists.
+	 * 
+	 * @return mysqli_result|bool
+	 */
+	function save(){
 
-        $data = (array)$this;
-        array_shift($data); //omitting id
-        if(isset($this->id)){ //update if exists
+		$data = (array)$this;
+		$data = array_filter($data, fn($x) => isset($x)); //filter out unset properties
+		unset($data["id"]); //omit id
+		if(isset($this->id)){ //update if exists
 
-            $query = "UPDATE ".get_class($this)." SET ";
-            while($field = current($data)){
+			$query = "UPDATE ".get_class($this)." SET ";
+			while($field = current($data)){
 
-                if(isset($field)) $query .= key($data)." = '$field'";
-                if(next($data)) $query .= ", ";
-                else $query .= " ";
-            }
-            $query .= " WHERE id = $this->id;";
-        }
-        else{ //create if does not exist
-        
-            $query = "INSERT INTO ".get_class($this)." (".implode(", ", array_keys($data)).") VALUES ('".implode("', '", array_values($data))."');";
-        }
-        Database::getInstance()->query($query);
-    }
+				if(isset($field)) $query .= key($data)." = '$field'";
+				if(next($data)) $query .= ", ";
+				else $query .= " ";
+			}
+			$query .= " WHERE id = $this->id;";
+			$result = Database::getInstance()->query($query);
+		}
+		else{ //create if does not exist
+		
+			$query = "INSERT INTO ".get_class($this)." (".implode(", ", array_keys($data)).") VALUES ('".implode("', '", array_values($data))."');";
+			$result = Database::getInstance()->query($query);
+			$this->id = Database::getInstance()->getLastInsertID();
+		}
+		return $result;
+	}
 
-    /**
-     * Delete the record.
-     */
-    function delete(){
+	/**
+	 * Delete the record.
+	 */
+	function delete(){
 
-        $query = "DELETE FROM ".get_class($this)." WHERE id = $this->id;";
-        Database::getInstance()->query($query);
-    }
+		$query = "DELETE FROM ".get_class($this)." WHERE id = $this->id;";
+		Database::getInstance()->query($query);
+	}
 
-    /**
-     * Delete records satisfying condition.
-     * 
-     * @param string $condition Condition in SQL format
-     */
-    static function deleteWhere($condition){
+	/**
+	 * Delete records satisfying condition.
+	 * 
+	 * @param string $condition Condition in SQL format
+	 */
+	static function deleteWhere($condition){
 
-        $query = "DELETE FROM ".get_called_class()." WHERE $condition;";
-        Database::getInstance()->query($query);
-    }
+		$query = "DELETE FROM ".get_called_class()." WHERE $condition;";
+		Database::getInstance()->query($query);
+	}
 
-    /**
-     * Fetch the record satisfying condition.
-     * 
-     * @param string $condition Conditions in SQL format
-     * @param string $fields Property names separated by commas
-     * 
-     * @throws Exception
-     * 
-     * @return Model|null
-     */
-    static function get($condition, $fields = "*"){
+	/**
+	 * Fetch the record satisfying condition.
+	 * 
+	 * @param string $condition Conditions in SQL format
+	 * @param string $fields Property names separated by commas
+	 * 
+	 * @throws Exception
+	 * 
+	 * @return Model|null
+	 */
+	static function get($condition, $fields = "*"){
 
-        $query = "SELECT $fields FROM ".get_called_class()." WHERE $condition;";
-        $result = Database::getInstance()->fetch($query, MYSQLI_ASSOC);
-        if($result){
+		$query = "SELECT $fields FROM ".get_called_class()." WHERE $condition;";
+		$result = Database::getInstance()->fetch($query, MYSQLI_ASSOC);
+		if($result){
 
-            if(count($result) > 1) throw new Exception("Multiple results");
-            else return new (get_called_class())($result[0]);
-        }
-        return null;
-    }
+			if(count($result) > 1) throw new Exception("Multiple results from Model::get()."); 
+			else return new (get_called_class())($result[0]);
+		}
+		return null;
+	}
 
-    /**
-     * Fetch all records satisfying condition.
-     * 
-     * @param string $condition Condition in SQL format
-     * @param string $fields Property names separated by commas
-     * 
-     * @return array Array of instances or empty array
-     */
-    static function filter($condition = "", $fields = "*"){
+	/**
+	 * Fetch all records satisfying condition.
+	 * 
+	 * @param string $condition Condition in SQL format
+	 * @param string $fields Property names separated by commas
+	 * 
+	 * @return array Array of instances or empty array
+	 */
+	static function filter($condition = "", $fields = "*"){
 
-        if($condition) $condition = " WHERE ".$condition;
-        $query = "SELECT $fields FROM ".get_called_class()."$condition;";
-        $result = Database::getInstance()->fetch($query, MYSQLI_ASSOC);
-        if($result) return array_map(fn($x) => new (get_called_class())($x), $result); 
-        return [];
-    }
+		if($condition) $condition = " WHERE ".$condition;
+		$query = "SELECT $fields FROM ".get_called_class()."$condition;";
+		$result = Database::getInstance()->fetch($query, MYSQLI_ASSOC);
+		if($result) return array_map(fn($x) => new (get_called_class())($x), $result); 
+		return [];
+	}
 
-    /**
-     * Fetch all records.
-     * 
-     * @param string $fields Property names separated by commas
-     * 
-     * @return array Array of instances or empty array
-     */
-    static function all($fields = "*"){
+	/**
+	 * Fetch all records.
+	 * 
+	 * @param string $fields Property names separated by commas
+	 * 
+	 * @return array Array of instances or empty array
+	 */
+	static function all($fields = "*"){
 
-        return self::filter(fields: $fields);
-    }
+		return self::filter(fields: $fields);
+	}
 
-    /**
-     * Check if a record satisfying condition exists.
-     * 
-     * @param string $condition Condition in SQL format
-     * 
-     * @return bool
-     */
-    static function exists($condition){
+	/**
+	 * Check if a record satisfying condition exists.
+	 * 
+	 * @param string $condition Condition in SQL format
+	 * 
+	 * @return bool
+	 */
+	static function exists($condition){
 
-        $query = "SELECT EXISTS(SELECT * FROM ".get_called_class()." WHERE $condition LIMIT 1);";
-        $result = Database::getInstance()->fetch($query);
-        return $result[0][0];
-    }
+		$query = "SELECT EXISTS(SELECT * FROM ".get_called_class()." WHERE $condition LIMIT 1);";
+		$result = Database::getInstance()->fetch($query);
+		return $result[0][0];
+	}
 }
