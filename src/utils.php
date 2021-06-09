@@ -69,6 +69,12 @@ function sendEmailChangeMail($user, $newEmail){
 }
 
 /**
+ * Various utility functions.
+ */
+
+//mail:
+
+/**
  * Construct and send message notification mail to given user.
  * 
  * @param User $user
@@ -87,14 +93,31 @@ function sendMessageNotificationMail($user, $message){
     sendMail($user->email, "You've received a new Allegro message", $body);
 }
 
+//authentication:
+
+/**
+ * Set session variables for given user and redirect to dashboard.
+ * 
+ * @param User $user
+ */
 function login($user){
 
     $_SESSION["is_authenticated"] = true;
     $_SESSION["id"] = $user->id;
     $_SESSION["username"] = $user->username;
+    $_SESSION["user"] = $user;
     header("Location: /dashboard");
 }
 
+//validation:
+
+/**
+ * Check if input is in the form of multiple words separated by spaces.
+ * 
+ * @param string $fullName
+ * 
+ * @return bool
+ */
 function validateFullName($fullName){
 
     return preg_match("/^[\p{L}.]([-']?[\p{L}.]+)*( [\p{L}.]([-']?[\p{L}.]+)*)+$/u", $fullName);

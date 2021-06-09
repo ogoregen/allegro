@@ -17,14 +17,31 @@ require_once "Database.php";
 
 abstract class Model{
 
+	public $id;
+
+	/**
+	 * Unset default property values.
+	 */
 	function __construct($fields = []){
 
 		foreach($fields as $key => $value) $this->$key = $value;
+
+		/*
+		foreach($this as $property => $value){
+
+			$this->property = $fields[$property] ?? null;
+		}
+		*/
 	}
 
+	/**
+	 * Prevent property definition in runtime.
+	 * 
+	 * @throws Exception
+	 */
 	function __set($name, $value){
 
-		throw new Exception("Cannot add new property \$$name to instance of Model.");
+		throw new Exception("Fields \$$name does not exist in ".self.".");
 	}
 
 	/**

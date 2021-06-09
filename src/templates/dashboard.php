@@ -34,34 +34,15 @@ include "components/notificationmodal.php";
                 </div>
             </div>
             <div style="min-width: 400px; height: 100%; display: flex; flex-direction: column;-1">
-                <a class="lbr-border-right lbr-border-bottom" style=" background-color: #f1f1f1; padding: 24px;">
-                <div class="lbr-text-lead">Hey</div>
-                        <div class="lbr-text-meta lbr-flex lbr-flex-space-between">
-                            <div>Harold Finch</div>
-                            <div>20/21/3421</div>
-                        </div>
-                </a>
-                <a class="lbr-border-bottom" style="padding: 24px;">
-                        <div class="lbr-text-lead">Hey</div>
-                        <div class="lbr-text-meta lbr-flex lbr-flex-space-between">
-                            <div>Harold Finch</div>
-                            <div>20/21/3421</div>
-                        </div>
-                </a>
-                <a class="lbr-border-right lbr-border-bottom" style=" background-color: #f1f1f1; padding: 24px;">
-                <div class="lbr-text-lead">Hey</div>
-                        <div class="lbr-text-meta lbr-flex lbr-flex-space-between">
-                            <div>Harold Finch</div>
-                            <div>20/21/3421</div>
-                        </div>
-                </a>
-                <a class="lbr-border-right lbr-border-bottom" style=" background-color: #f1f1f1; padding: 24px;">
-                <div class="lbr-text-lead">Hey</div>
-                        <div class="lbr-text-meta lbr-flex lbr-flex-space-between">
-                            <div>Harold Finch</div>
-                            <div>20/21/3421</div>
-                        </div>
-                </a>
+                <?php foreach($context["receivedMessages"] as $message): ?>
+                    <a class="lbr-border-right lbr-border-bottom" style=" background-color: #f1f1f1; padding: 24px;">
+                    <div class="lbr-text-lead"><?= $message->subject ?></div>
+                            <div class="lbr-text-meta lbr-flex lbr-flex-space-between">
+                                <div><?= $message->author ?></div>
+                                <div><?= date($message->createdOn) ?></div>
+                            </div>
+                    </a>
+                <?php endforeach ?>
                 <div class="lbr-border-right" style="flex-grow: 1; background-color: #f1f1f1; ">
                 </div>
             </div>

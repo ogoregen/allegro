@@ -21,6 +21,7 @@ use function Allegro\Core\view\requireUnauthentication;
 
 function test(){
 
+	var_dump(User::filter("id > 41"));
 }
 
 function landingPage(){
@@ -42,7 +43,7 @@ function dashboard(){
 		"title" => "Dashboard",
 		"metaDescription" => "",
 		"messages" => Messages::getMessages(),
-		//"receivedMessages" => Message::filter("recipient = {$_SESSION["id"]}"),
+		"receivedMessages" => Message::filter("recipient = {$_SESSION["user"]->id}"),
 		//"sentMessages" => Message::filter("author = {$_SESSION["id"]}"),
 	];
 	render("dashboard.php", $context);
@@ -62,6 +63,20 @@ function sendMessage(){
 
 	requirePOST();
 	requireAuthentication();
+	
+	$recipient = $_POST["to"];
+	$recipient = User::get("email = '$recipient' OR username = '$recipient'");
+
+	$message = new Message();
+	$message->author = $_SESSION["user"]->id;
+	$message->recipient = $recipient->id;
+	$message->subject = $_POST["subject"];
+	$message->body = $_POST["body"];
+	$message->save();
+	
+	Messages::addMessage("success", "Message sent!");
+
+	header("Location: /dashboard");
 }
 
 function account(){

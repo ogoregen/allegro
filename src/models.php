@@ -6,7 +6,6 @@ use Allegro\Core\Model;
 
 class User extends Model{
 
-	public $id;
 	public $email;
 	public $username;
 	public $password;
@@ -24,9 +23,8 @@ class User extends Model{
 
 class Message extends Model{
 
-	public $id;
 	public $author;
-	public $recipients;
+	public $recipient;
 	public $createdOn;
 	public $subject;
 	public $body;
@@ -34,7 +32,6 @@ class Message extends Model{
 
 class VerificationToken extends Model{
 
-	public $id;
 	public $user;
 	public $token;
 	public $createdOn;
