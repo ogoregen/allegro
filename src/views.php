@@ -48,15 +48,41 @@ function dashboard(){
 	];
 	render("dashboard.php", $context);
 }
+function sent(){
 
-function people(){
 	requireAuthentication();
 	$context = [
-		"title" => "",
+		"title" => "Dashboard",
+		"metaDescription" => "",
+		"messages" => Messages::getMessages(),
+		"receivedMessages" => Message::filter("recipient = {$_SESSION["user"]->id}"),
+		//"sentMessages" => Message::filter("author = {$_SESSION["id"]}"),
+	];
+	render("sent.php", $context);
+}
+function drafts(){
+
+	requireAuthentication();
+	$context = [
+		"title" => "Dashboard",
+		"metaDescription" => "",
+		"messages" => Messages::getMessages(),
+		"receivedMessages" => Message::filter("recipient = {$_SESSION["user"]->id}"),
+		//"sentMessages" => Message::filter("author = {$_SESSION["id"]}"),
+	];
+	render("drafts.php", $context);
+}
+
+function people(){
+
+	requireAuthentication();
+	$context = [
+		"title" => "People",
 		"metaDescription" => "",
 		"messages" => Messages::getMessages(),
 		"people" => User::all(),
 	];
+	render("people.php", $context);
 }
 
 function sendMessage(){

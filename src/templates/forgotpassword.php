@@ -3,7 +3,7 @@
 <div class="lbr-height-viewport lbr-background-gradient lbr-flex lbr-flex-vertical">
     <nav class="lbr-background-default lbr-width-full lbr-padding-small">
         <div clas="lbr-container lbr-flex lbr-flex-space-between">
-            <a>Allegro</a>
+            <a class="lbr-border-bottom lbr-text-logo" style="padding: 8px 24px;">Allegro</a>
         </div>
     </nav>
     <div class="lbr-container-small lbr-flex lbr-flex-middle lbr-flex-vertical lbr-flex-center lbr-flex-expand">

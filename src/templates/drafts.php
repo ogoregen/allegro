@@ -21,9 +21,9 @@ include "components/notificationmodal.php";
                     <button class="lbr-button lbr-button-primary" onclick="document.getElementById('composeModal').hidden = false;" style="width: 100%;">New Message</button>
                 </div>
                 <div class="lbr-tab-vertical-dashed">
-                    <button class=" active" style="width: 100%; text-align: left"><i class="fas fa-inbox lbr-margin-small-right"></i>Inbox</button>
-                    <button style="width: 100%; text-align: left"><a href="/sent"><i class="fas fa-paper-plane lbr-margin-small-right"></i>Sent</a></button>
-                    <button style="width: 100%; text-align: left"><i class="fas fa-pencil-alt lbr-margin-small-right"></i><a href="/drafts">Drafts</a></button>
+                    <button style="width: 100%; text-align: left"><i class="fas fa-inbox lbr-margin-small-right"></i><a href="/dashboard">Inbox</a></button>
+                    <button style="width: 100%; text-align: left"><i class="fas fa-paper-plane lbr-margin-small-right"></i><a href="/sent">Sent</a></button>
+                    <button class="active" style="width: 100%; text-align: left"><i class="fas fa-pencil-alt lbr-margin-small-right"></i>Drafts</button>
                 </div>
 
                 <div class="lbr-border-right"style=" flex-grow: 1">

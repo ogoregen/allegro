@@ -6,6 +6,8 @@ $urls = [
 	"404"            => "_404",
  
 	"dashboard"      => "dashboard",      // app
+	"sent"           => "sent",
+	"drafts"         => "drafts",
 	"people"         => "people",         //
 	"account"        => "account",        //
 	"sendmessage"    => "sendMessage",    // // non-visual
