@@ -14,4 +14,5 @@
     <body>
         <?php include $template ?>
     </body>
+    <script src="static/js/utils.js"></script>
 </html>

@@ -33,3 +33,14 @@ function renderToString($template, $context = []){
 	ob_end_clean();
 	return $result;
 }
+
+/**
+ * Render template passing variables. For use in templates.
+ * 
+ * @param string $template File name of the template (in templates/components/)
+ * @param array $context Variables to be passed to the template
+ */
+function includeTemplate($template, $context = []){
+
+	include "../templates/components/$template";
+}

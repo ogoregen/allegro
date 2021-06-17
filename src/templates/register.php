@@ -1,17 +1,20 @@
 
-<div class="lbr-height-viewport lbr-background-gradient lbr-flex lbr-flex-vertical">
-    <nav class="lbr-background-default lbr-width-full lbr-padding-small">
-        <div clas="lbr-container lbr-flex lbr-flex-space-between">
-            <a>Allegro</a>
-        </div>
-    </nav>
+<?php
+require_once "../core/template.php";
+use function Allegro\Core\template\includeTemplate;
+?>
+
+<div class="lbr-height-viewport lbr-background-gradient lbr-flex lbr-flex-vertical lbr-background-shapes-3">
+    <?php 
+    includeTemplate("nav.php", ["noRegisterButton" => true]);
+    ?>
     <div class="lbr-container-small lbr-flex lbr-flex-middle lbr-flex-center lbr-flex-expand">
         <?php if(isset($context["errors"]["form"])): ?>
             <div class="lbr-margin lbr-alert lbr-alert-error">
                 <p><?= $context["errors"]["form"] ?></p>
             </div>
         <?php endif ?>
-        <div class="lbr-section lbr-width-full">
+        <div class="lbr-section lbr-width-full lbr-border">
             <h1 class="lbr-margin-0-top lbr-margin">Sign Up</h1>
         <form action="" method="POST">
             <div class="lbr-margin">

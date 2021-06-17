@@ -12,7 +12,7 @@ class User extends Model{
 	public $createdOn;
 	public $firstName;
 	public $lastName;
-	public $emailVerified;
+	public $emailVerified; 
 	public $emailNotify;
 	
 	function fullName(){
@@ -26,6 +26,7 @@ class Message extends Model{
 	public $author;
 	public $recipient;
 	public $createdOn;
+	public $status;
 	public $subject;
 	public $body;
 }

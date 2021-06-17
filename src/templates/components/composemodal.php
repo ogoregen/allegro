@@ -5,7 +5,7 @@
             <span style="padding-left: 12px">Compose a message</span>
             <a onclick="document.getElementById('composeModal').hidden = true;" class="fas fa-times" style="padding-right: 12px"></a>
         </div>
-        <form class="lbr-flex-expand lbr-flex lbr-flex-vertical" action="" method="POST">
+        <form class="lbr-flex-expand lbr-flex lbr-flex-vertical" action="/sendmessage" method="POST">
             <div class="lbr-padding">
                 <div class="lbr-flex lbr-margin lbr-width-full lbr-margin-bottom">
                     <label class="lbr-label-inline" for="to">To</label>
@@ -24,12 +24,12 @@
                 <div class="lbr-border-bottom lbr-flex-expand">
                 </div>
                 <span class="lbr-tab lbr-flex">
-                    <button type="button"><i class="fas fa-save lbr-margin-small-right"></i>Save as draft</button>
-                    <button type="submit"><i class="fas fa-paper-plane lbr-margin-small-right"></i>Send</button>
+                    <button name="submit" value="draft" type="submit"><i class="fas fa-save lbr-margin-small-right"></i>Save as draft</button>
+                    <button name="submit" type="submit"><i class="fas fa-paper-plane lbr-margin-small-right"></i>Send</button>
                 </span>
             </div>
             <div class="lbr-height-full" id="tabs">
-                <textarea name="message" class="lbr-textarea-minimal" id="input" required></textarea>
+                <textarea name="body" class="lbr-textarea-minimal" id="input" required></textarea>
                 <div class="lbr-padding-horizontal" id="preview" hidden>
                 </div>
                 
@@ -68,4 +68,5 @@ function generatePreview(){
 
     preview.innerHTML = marked(input.value);
 }
+
 </script>

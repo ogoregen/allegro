@@ -21,7 +21,8 @@ use function Allegro\Core\view\requireUnauthentication;
 
 function test(){
 
-	var_dump(User::filter("id > 41"));
+	Messages::addMessage("hey", "hey");
+	header("Location: /");
 }
 
 function landingPage(){
@@ -39,12 +40,37 @@ function landingPage(){
 function dashboard(){
 
 	requireAuthentication();
+
+	switch($_GET["tab"] ?? "inbox"){
+
+		case "inbox":
+			$allegroMessages = Message::filter("recipient = {$_SESSION["user"]->id}");
+			break;
+
+		case "sent":
+			$allegroMessages = Message::filter("author = {$_SESSION["id"]}");
+			break;
+
+		case "drafts":
+			$allegroMessages = Message::filter("author = {$_SESSION["id"]} AND status = 'D'");
+			break;
+	}
+
+	if(isset($_GET["message"])){
+
+		$selectedMessage = Message::get("id = {$_GET["message"]}");
+		if($selectedMessage->author != $_SESSION["user"]->id){
+			$selectedMessage = null;
+		}
+	}
+
 	$context = [
 		"title" => "Dashboard",
 		"metaDescription" => "",
 		"messages" => Messages::getMessages(),
-		"receivedMessages" => Message::filter("recipient = {$_SESSION["user"]->id}"),
-		//"sentMessages" => Message::filter("author = {$_SESSION["id"]}"),
+		"tab" => $_GET["tab"] ?? "inbox",
+		"allegroMessages" => $allegroMessages,
+		"selectedMessage" => $selectedMessage ?? null,
 	];
 	render("dashboard.php", $context);
 }
@@ -67,14 +93,31 @@ function sendMessage(){
 	$recipient = $_POST["to"];
 	$recipient = User::get("email = '$recipient' OR username = '$recipient'");
 
+	if(!$recipient){
+
+		$draft = true;
+		$notification = "Recipient {$_POST["to"]} does not exist. Message saved as draft.";
+	}
+	if($_POST["submit"] == "draft"){
+
+		$draft = true;
+		$notification = "Message saved as draft.";
+	}
+
 	$message = new Message();
 	$message->author = $_SESSION["user"]->id;
 	$message->recipient = $recipient->id;
 	$message->subject = $_POST["subject"];
 	$message->body = $_POST["body"];
-	$message->save();
-	
-	Messages::addMessage("success", "Message sent!");
+	if($draft) $message->status = 'D';
+	else{
+
+		$message->save();
+		$notification = "Message sent.";
+		sendMessageNotificationMail($recipient, $message);
+	}
+
+	Messages::addMessage("success", $notification);
 
 	header("Location: /dashboard");
 }

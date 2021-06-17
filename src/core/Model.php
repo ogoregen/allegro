@@ -106,7 +106,7 @@ abstract class Model{
 	 * @return Model|null
 	 */
 	static function get($condition, $fields = "*"){
-
+		
 		$query = "SELECT $fields FROM ".get_called_class()." WHERE $condition;";
 		$result = Database::getInstance()->fetch($query, MYSQLI_ASSOC);
 		if($result){

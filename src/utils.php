@@ -82,13 +82,12 @@ function sendEmailChangeMail($user, $newEmail){
  */
 function sendMessageNotificationMail($user, $message){
 
-    if(!$user->notify) return;
+    if(!$user->emailNotify) return;
 
     $context = [
-        "fullName" => $user->fullName,
         "message" => $message,
     ];
-    $body = renderToString("mail/messagenotification", $context);
+    $body = renderToString("mail/messagenotification.php", $context);
 
     sendMail($user->email, "You've received a new Allegro message", $body);
 }
