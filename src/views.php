@@ -448,6 +448,15 @@ function logout(){
 	header("Location: /");
 }
 
+function about(){
+	requireUnauthentication("dashboard");
+	$context = [
+		"title" => "The ultimate student messenger - Allegro",
+		"metaDescription" => "",
+	];
+	render("about.php", $context);
+}
+
 function verifyEmail(){
 
 	if($_SESSION && $_SESSION["userID"] != $_GET["id"]){

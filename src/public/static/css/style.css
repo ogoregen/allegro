@@ -546,6 +546,11 @@ h1, h2, h3, h4, h5, h6,
 .lbr-border-bottom{
 	border-bottom: 1px solid #d6d6d6;
 }
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 
 /* message navigation */
 
@@ -559,4 +564,9 @@ h1, h2, h3, h4, h5, h6,
 .lbr-message-nav-active{
 	background-color: aliceblue;
 	border-right: 1px solid #fff;
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
