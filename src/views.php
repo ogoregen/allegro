@@ -21,8 +21,14 @@ use function Allegro\Core\view\requireUnauthentication;
 
 function test(){
 
-	Messages::addMessage("hey", "hey");
-	header("Location: /");
+	$u = new User();
+	$u->email = "h";
+	$u->username = "h";
+	$u->firstName = "h";
+	$u->lastName = "h";
+	$u->password = "h";
+	$u->password = "h";
+	var_dump($u->save());
 }
 
 function landingPage(){
@@ -33,6 +39,11 @@ function landingPage(){
 		"metaDescription" => "",
 	];
 	render("landingpage.php", $context);
+}
+
+function privacyPolicy(){
+
+	render("privacypolicy.php");
 }
 
 //app:
@@ -76,13 +87,17 @@ function dashboard(){
 }
 
 function people(){
+
 	requireAuthentication();
+	
 	$context = [
-		"title" => "",
+		"title" => "People",
 		"metaDescription" => "",
 		"messages" => Messages::getMessages(),
 		"people" => User::all(),
 	];
+
+	render("people.php", $context);
 }
 
 function sendMessage(){
@@ -126,6 +141,8 @@ function account(){
 
 	requireAuthentication();
 
+	$tab = $_GET["tab"] ?? "details";
+
 	if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 		$user = $_SESSION["user"];
@@ -134,18 +151,75 @@ function account(){
 
 			case("details"):
 
+				$failed = false;
+
+				$autofill["name"] = $user->fullName();
+				$autofill["email"] = $user->email;
+				$autofill["username"] = $user->username;
+
 				$name = trim($_POST["name"]);
-				if(validateFullName($name)){
 
-					$user->firstName = implode(" ", explode(" ", $name, -1));
-					$user->lastName =  substr($name, strrpos($name, " ") + 1);
-				}
-				else{
+				if($name != $user->fullName()){
 
-					$errors["name"] = "Please enter a valid name.";
-					$autofill["name"] = $_POST["name"];
+					if(validateFullName($name)){
+
+						$user->firstName = implode(" ", explode(" ", $name, -1));
+						$user->lastName =  substr($name, strrpos($name, " ") + 1);
+						$user->username = $_POST["username"];
+					}
+					else{
+	
+						$errors["name"] = "Please enter a valid name.";
+						$autofill["name"] = $_POST["name"];
+						$failed = true;
+					}
 				}
-				$user->save();
+
+				if($_POST["email"] != $user->email){
+
+					if(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+
+						$errors["email"] = "Please enter a valid email address.";
+						$autofill["email"] = $_POST["email"];
+						$failed = true;
+					}
+					else if(User::exists("email = '{$_POST["email"]}'")){
+			
+						$errors["email"] = "A user with this email address already exists.";
+						$autofill["email"] = $_POST["email"];
+						$failed = true;
+					}
+					else{
+						$user->email = $_POST["email"];
+					}
+				}
+
+				if($_POST["username"] != $user->username){
+
+					if(!ctype_alnum($_POST["username"])){
+		
+						$errors["username"] = "Username must be alphanumeric";
+						$autofill["username"] = $_POST["username"];
+						$failed = true;
+					}
+					else if(User::exists("username = '{$_POST["username"]}'")){
+			
+						$errors["username"] = "A user with this user name address already exists.";
+						$autofill["username"] = $_POST["username"];
+						$failed = true;
+					}
+					else{
+						$user->username = $_POST["username"];
+					}
+				}
+
+				if(!$failed){
+
+					$user->save();
+					Messages::addMessage("success", "Your details have been saved.");
+
+				}
+
 				break;
 
 			case("emailPreferences"):
@@ -178,12 +252,30 @@ function account(){
 				break;
 		}
 	}
+	else{
+		switch($tab){
+
+			case "details":
+				$autofill = [
+					"name" => $_SESSION["user"]->fullName(),
+					"username" => $_SESSION["user"]->username,
+					"email" => $_SESSION["user"]->email,
+				];
+				break;
+		}
+	}
+
+
+
 
 	$context = [
 		"title" => "",
 		"messages" => Messages::getMessages(),
+		"tab" => $tab,
+		"autofill" => $autofill ?? [],
+		"errors" => $errors ?? []
 	];
-	render("settings.php", $context);
+	render("account.php", $context);
 }
 
 //authentication:
@@ -325,7 +417,7 @@ function resetPassword(){
 
 			if(strlen($_POST["password"]) >= 8){
 
-				$user->password = $_POST["password"];
+				$user->password = password_hash($_POST["password"], PASSWORD_BCRYPT);
 				$user->save();
 				Messages::addMessage("success", "changed"); 
 			}

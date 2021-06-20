@@ -3,7 +3,7 @@
 //database
 define("DB_HOST", "localhost");
 define("DB_USER", "allegro");
-define("DB_PASS", "IDsvW.A!j*XajZ1t");
+define("DB_PASS", "AA8IOj8kHt90jnowYhPwTAkOct4L^@");
 define("DB_NAME", "allegro");
 
 //email

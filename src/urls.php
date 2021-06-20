@@ -16,7 +16,7 @@ $urls = [
     "verify"         => "verifyEmail",    // //
 
 	"dashboard"      => "dashboard",      // app
-	"people"         => "people",         //
+	"classmates"     => "people",         //
 	"account"        => "account",        //
 	"sendmessage"    => "sendMessage",    // // non-visual
  

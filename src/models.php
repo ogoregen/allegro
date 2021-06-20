@@ -10,10 +10,12 @@ class User extends Model{
 	public $username;
 	public $password;
 	public $createdOn;
+	public $lastActive;
 	public $firstName;
 	public $lastName;
 	public $emailVerified; 
 	public $emailNotify;
+	public $emailMarketing;
 	
 	function fullName(){
 

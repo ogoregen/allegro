@@ -121,3 +121,9 @@ function validateFullName($fullName){
 
     return preg_match("/^[\p{L}.]([-']?[\p{L}.]+)*( [\p{L}.]([-']?[\p{L}.]+)*)+$/u", $fullName);
 }
+
+function updateActivity($user){
+
+    $user->lastActive = time();
+    $user->save();
+}

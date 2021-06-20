@@ -34,6 +34,7 @@ function sendMail($recipients, $subject, $body){
 	$mail = new PHPMailer(true);
 
 	$mail->isSMTP();
+	$mail->CharSet = "UTF-8";
 	$mail->SMTPAuth = true;
 	$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
 	

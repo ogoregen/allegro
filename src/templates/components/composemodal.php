@@ -1,6 +1,6 @@
 
-<div class="lbr-modal" id="composeModal" style="padding: 24px;" hidden>
-    <div class="lbr-container lbr-height-full lbr-margin-auto-horizontal lbr-flex lbr-flex-vertical lbr-border-radius lbr-background-default">
+<div class="lbr-modal lbr-height-viewport lbr-modal-back-blurred" id="composeModal" style="padding: 24px;" hidden>
+    <div class="lbr-container lbr-height-full lbr-margin-auto-horizontal lbr-border lbr-flex lbr-flex-vertical lbr-border-radius lbr-background-default">
         <div class="lbr-flex lbr-flex-space-between lbr-padding-small lbr-flex-middle lbr-border-bottom">
             <span style="padding-left: 12px">Compose a message</span>
             <a onclick="document.getElementById('composeModal').hidden = true;" class="fas fa-times" style="padding-right: 12px"></a>
