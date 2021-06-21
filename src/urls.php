@@ -18,7 +18,8 @@ $urls = [
 	"dashboard"      => "dashboard",      // app
 	"classmates"     => "people",         //
 	"account"        => "account",        //
-	"sendmessage"    => "sendMessage",    // // non-visual
- 
+	"sendmessage"    => "sendMessage",   // // non-visual
+ 	"deletemessage"    => "deleteMessage", 
+	
 	"test"           => "test",
 ];
