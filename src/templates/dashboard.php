@@ -5,6 +5,7 @@ use function Allegro\Core\template\includeTemplate;
 
 include "components/composemodal.php";
 include "components/notificationmodal.php";
+includeTemplate ("deleteconfirmationmodal.php", ["deleteMessage" => $context["deleteMessage"], "messageToDelete" => $context["messageToDelete"]]);
 
 ?>
 
@@ -59,8 +60,11 @@ include "components/notificationmodal.php";
                     <div class="lbr-text-lead"><?= $context["selectedMessage"]->subject ?></div>
                     <div class="lbr-text-meta"><?= $context["selectedMessage"]->author ?> - <?= $context["selectedMessage"]->createdOn ?></div>
                 </div>
-                <div class="lbr-flex lbr-flex-middle"><i class="fas fa-reply"></i><i class="lbr-margin-left fas fa-trash"></i></div>
+                <div class="lbr-flex lbr-flex-middle">
+                    <i class="fas fa-reply"></i>
+                    <a href="?deletemessage&id=<?= $context["selectedMessage"]->id ?>" class="lbr-margin-left fas fa-trash"></a>
                 </div>
+            </div>
                 <?= $context["selectedMessage"]->body ?>
 
             <?php endif ?>

@@ -74,6 +74,11 @@ function dashboard(){
 			$selectedMessage = null;
 		}
 	}
+	if(isset($_GET["deletemessage"])){
+
+		$deleteMessage = true;
+		$messageToDelete = $_GET["id"];
+	}
 
 	$context = [
 		"title" => "Dashboard",
@@ -82,6 +87,8 @@ function dashboard(){
 		"tab" => $_GET["tab"] ?? "inbox",
 		"allegroMessages" => $allegroMessages,
 		"selectedMessage" => $selectedMessage ?? null,
+		"deleteMessage" => $deleteMessage ?? false,
+		"messageToDelete" => $messageToDelete ?? null,
 	];
 	render("dashboard.php", $context);
 }
@@ -135,6 +142,21 @@ function sendMessage(){
 	Messages::addMessage("success", $notification);
 
 	header("Location: /dashboard");
+}
+
+function deleteMessage(){
+	
+	requirePOST();
+	requireAuthentication();
+
+	$message = Message::get("id = {$_POST["messageID"]}");
+	if($message->author == $_SESSION["user"]->id){
+		$message->delete();
+		$notification = "Message deleted.";
+		Messages::addMessage("success", $notification);
+	}
+	header("Location: /dashboard");
+	
 }
 
 function account(){
