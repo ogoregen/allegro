@@ -15,3 +15,4 @@ Please feel free to
 ## Dependencies
 
 * [PHPMailer](https://github.com/PHPMailer/PHPMailer)
+* [Parsedown](https://github.com/erusev/parsedown)
