@@ -57,12 +57,17 @@ abstract class Model{
 		if(isset($this->id)){ //update if exists
 
 			$query = "UPDATE ".get_class($this)." SET ";
-			while($field = current($data)){
+			
+			foreach($data as $key => $value){
 
-				if(isset($field)) $query .= key($data)." = '$field'";
-				if(next($data)) $query .= ", ";
-				else $query .= " ";
+				if(isset($value)){
+
+					$query .= $key." = '$value'";
+					if($key == array_key_last($data)) $query .= " ";
+					else $query .= ", ";
+				}
 			}
+
 			$query .= " WHERE id = $this->id;";
 			$result = Database::getInstance()->query($query);
 		}
