@@ -9,13 +9,19 @@ class User extends Model{
 	public $email;
 	public $username;
 	public $password;
+
 	public $createdOn;
 	public $lastActive;
+
 	public $firstName;
 	public $lastName;
+
 	public $emailVerified; 
 	public $emailNotify;
-	public $emailMarketing;
+	public $emailInform;
+
+	public $displayEmail;
+	public $displayOnline;
 	
 	function fullName(){
 
@@ -49,6 +55,11 @@ class VerificationToken extends Model{
 	 * @return string bool 
 	 */
 	static function createToken($user, $lifespan = 172800 /* (seconds) 2 days */){
+
+		if($existingVerificationToken = self::get("user = $user->id")){
+
+			$existingVerificationToken->delete();
+		}
 
 		$verificationToken = new self();
 		$verificationToken->user = $user->id;
