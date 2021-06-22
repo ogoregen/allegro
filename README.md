@@ -1,18 +1,17 @@
-![Allegro Logo](https://user-images.githubusercontent.com/37447279/116271894-1800dd00-a789-11eb-8dad-971afed890cf.png)
----
+# Allegro - Student Messaging System
 
-Allegro is an asynchronous messaging web application aimed at students.
+[Allegro](https://allegroapp.me) is an asynchronous messaging web application aimed at students.
 
-## Getting Started
+## Deployment
 
-Please feel free to
-
-* Check [wiki](https://github.com/ogoregen/allegro/wiki) for documentation.
-* Check [discussions](https://github.com/ogoregen/allegro/discussions) for questions.
-* File any problem or suggession on [issues](https://github.com/ogoregen/allegro/issues).
-* Create pull requests.
+Allegro requires PHP (version 8.0 or above) and MySQL. It is designed to work on Apache, but can easily be adapted for other HTTP servers. Code to create required database structure is included in `data/database.sql`. The folder `src/public/` must be served.
 
 ## Dependencies
 
 * [PHPMailer](https://github.com/PHPMailer/PHPMailer)
 * [Parsedown](https://github.com/erusev/parsedown)
+* [Marked](https://github.com/markedjs/marked)
+
+## Credits
+
+Allegro was developed by Berfin Sünncetcioğlu, Fatma Kara, and Oğuzhan Göregen as part of CEIT133 course.
