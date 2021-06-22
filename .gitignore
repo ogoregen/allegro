@@ -1,2 +1,3 @@
 src/vendor/
 src/core/vendor/
+src/config/credentials.php
