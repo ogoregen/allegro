@@ -4,7 +4,7 @@
 
 ## Deployment
 
-Allegro requires PHP (version 8.0 or above) and MySQL. It is designed to work on Apache 2, but can easily be adapted for other HTTP servers. The folder `src/public/` must be served. Code to create required database structure is included in `data/database.sql`. `config/credentials.php` must be created with credentials for the database and an external mail server.
+Allegro requires PHP (version 8.0 or above) and MySQL. It is designed to work on Apache 2, but can easily be adapted for other HTTP servers. The folder `src/public/` must be served. Code to create required database structure is included in `data/database.sql`. `src/config/credentials.php` must be created with credentials for the database and an external mail server.
 
 ## Dependencies
 
