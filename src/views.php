@@ -300,6 +300,7 @@ function account(){
 	render("account.php", $context);
 }
 
+
 //authentication:
 
 function register(){
@@ -498,6 +499,11 @@ function verifyEmail(){
 		Messages::addMessage("error", "Invalid verification link.");
 	}
 	header("Location: /");
+}
+
+function support(){
+
+		render("support.php"); 
 }
 
 //error:
