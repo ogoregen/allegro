@@ -15,4 +15,4 @@ Allegro requires PHP (version 8.0 or above) and MySQL. It is designed to work on
 
 Allegro was developed by Berfin Sünnetcioğlu, Fatma Kara, and Oğuzhan Göregen as part of CEIT133 course.
 
-Allegro uses [League Spartan](https://www.theleagueofmoveabletype.com/league-spartan) and [Manrope](https://manropefont.com/) fonts, background images from [BGJar](https://bgjar.com/), and icons from [Font Awesome](https://fontawesome.com), and mockup images from [Smartmockups](https://smartmockups.com).
+Allegro uses [League Spartan](https://www.theleagueofmoveabletype.com/league-spartan) and [Manrope](https://manropefont.com/) fonts, background images from [BGJar](https://bgjar.com/), icons from [Font Awesome](https://fontawesome.com), and mockup images from [Smartmockups](https://smartmockups.com).
