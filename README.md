@@ -10,7 +10,6 @@ Allegro requires PHP (version 8.0 or above) and MySQL. It is designed to work on
 
 * [PHPMailer](https://github.com/PHPMailer/PHPMailer)
 * [Parsedown](https://github.com/erusev/parsedown)
-* [Marked](https://github.com/markedjs/marked)
 
 ## Credits
 
