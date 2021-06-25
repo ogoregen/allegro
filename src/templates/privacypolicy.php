@@ -1,6 +1,7 @@
 <?php
 
 require_once "../core/template.php";
+
 use function Allegro\Core\template\includeTemplate;
 
 ?>
@@ -20,25 +21,25 @@ use function Allegro\Core\template\includeTemplate;
             <h3>Personal Information</h3>
             <p>We may ask for personal information which may include one or more of the following: </p>
             <ul>
-               <li>Name</li>
-               <li>Email</li>
+                <li>Name</li>
+                <li>Email</li>
             </ul>
             <h3>Legitimate Reasons for Processing Your Personal Information</h3>
             <p>We only collect and use your personal information when we have a legitimate reason for doing so. In which instance, we only collect personal information that is reasonably necessary to provide our services to you. </p>
             <h3>Collection and Use of Information</h3>
             <p>We may collect personal information from you when you do any of the following on our website: </p>
             <ul>
-               <li>Sign up to receive updates from us via email or social media channels</li>
-               <li>Use a mobile device or web browser to access our content</li>
-               <li>Contact us via email, social media, or on any similar technologies</li>
-               <li>When you mention us on social media</li>
+                <li>Sign up to receive updates from us via email or social media channels</li>
+                <li>Use a mobile device or web browser to access our content</li>
+                <li>Contact us via email, social media, or on any similar technologies</li>
+                <li>When you mention us on social media</li>
             </ul>
             <p>We may collect, hold, use, and disclose information for the following purposes, and personal information will not be further processed in a manner that is incompatible with these purposes: </p>
             <p>We may collect, hold, use, and disclose information for the following purposes, and personal information will not be further processed in a manner that is incompatible with these purposes: </p>
             <ul>
-               <li>to contact and communicate with you</li>
-               <li>to enable you to access and use our website, associated applications, and associated social media platforms</li>
-               <li>for security and fraud prevention, and to ensure that our sites and apps are safe, secure, and used in line with our terms of use</li>
+                <li>to contact and communicate with you</li>
+                <li>to enable you to access and use our website, associated applications, and associated social media platforms</li>
+                <li>for security and fraud prevention, and to ensure that our sites and apps are safe, secure, and used in line with our terms of use</li>
             </ul>
             <p>Please be aware that we may combine information we collect about you with general information or research data we receive from other trusted sources. </p>
             <h3>Security of Your Personal Information</h3>
@@ -72,5 +73,3 @@ use function Allegro\Core\template\includeTemplate;
     </div>
     <?php includeTemplate("footer.php", ["current" => "privacyPolicy"]) ?>
 </div>
-
-<script src="static/js/utils.js"></script>

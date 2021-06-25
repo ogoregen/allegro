@@ -4,6 +4,8 @@
  * App-specific utility functions.
  */
 
+require_once "vendor/parsedown/Parsedown.php";
+
 require_once "core/mail.php";
 require_once "models.php";
 
@@ -84,6 +86,10 @@ function sendMessageNotificationMail($user, $message){
 
     if(!$user->emailNotify) return;
 
+    $parsedown = new Parsedown();
+
+    $message->body = $parsedown->text($message->body);
+
     $context = [
         "message" => $message,
     ];
@@ -101,10 +107,8 @@ function sendMessageNotificationMail($user, $message){
  */
 function login($user){
 
-    $_SESSION["is_authenticated"] = true;
-    $_SESSION["id"] = $user->id;
-    $_SESSION["username"] = $user->username;
-    $_SESSION["user"] = $user;
+    $_SESSION["isAuthenticated"] = true;
+    $_SESSION["user"] = User::get("id = $user->id");
     header("Location: /dashboard");
 }
 
@@ -124,6 +128,6 @@ function validateFullName($fullName){
 
 function updateActivity($user){
 
-    $user->lastActive = time();
+    $user->lastActive = date("Y-m-d H:i:s", time());
     $user->save();
 }

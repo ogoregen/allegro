@@ -6,10 +6,13 @@
  * or redirects to another view and add it to the urls array in urls.php
  */
 
+require_once "vendor/parsedown/Parsedown.php";
+
 require_once "core/view.php";
 require_once "core/template.php";
 require_once "core/Messages.php";
 require_once "core/mail.php";
+
 require_once "models.php";
 require_once "utils.php";
 
@@ -19,31 +22,58 @@ use function Allegro\Core\view\requirePOST;
 use function Allegro\Core\view\requireAuthentication;
 use function Allegro\Core\view\requireUnauthentication;
 
-function test(){
-
-	$u = new User();
-	$u->email = "h";
-	$u->username = "h";
-	$u->firstName = "h";
-	$u->lastName = "h";
-	$u->password = "h";
-	$u->password = "h";
-	var_dump($u->save());
-}
-
 function landingPage(){
 
 	requireUnauthentication("dashboard");
 	$context = [
-		"title" => "The ultimate student messenger - Allegro",
-		"metaDescription" => "",
+		"title" => "The ultimate student messenger",
+		"metaDescription" => "Allegro standardizes your classroom's out-of-class communication replacing hard to follow chat groups and unspecialized email. A no-nonsense messaging application where you will instantly feel familiar.",
 	];
 	render("landingpage.php", $context);
 }
 
 function privacyPolicy(){
 
-	render("privacypolicy.php");
+	$context = [
+		"title" => "Privacy Policy",
+		"metaDescription" => "Your privacy is important to us. It is Allegro's policy to respect your privacy and comply with any applicable law and regulation regarding any personal information about you.",
+	];
+	render("privacypolicy.php", $context);
+}
+
+function support(){
+
+	if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+		$supportTicket = new SupportTicket();
+		$supportTicket->author = $_SESSION["user"]->id;
+		$supportTicket->subject = $_POST["subject"];
+		$supportTicket->body = $_POST["body"];
+		$supportTicket->save();
+		Messages::addMessage("success", "Your message has been sent. We will get back to you as soon as possible.");
+	}
+
+	$context = [
+		"title" => "Support",
+		"metaDescription" => "Frequently Asked Questions and support",
+	];
+
+	render("support.php", $context);
+}
+
+function about(){
+	$context = [
+		"title" => "About",
+		"metaDescription" => "Allegro is the education communication platform you've been looking for. Learn more.",
+	];
+	render("about.php", $context);
+}
+
+function credits(){
+	$context = [
+		"title" => "Credits",
+	];
+	render("credits.php", $context);
 }
 
 //app:
@@ -55,40 +85,114 @@ function dashboard(){
 	switch($_GET["tab"] ?? "inbox"){
 
 		case "inbox":
-			$allegroMessages = Message::filter("recipient = {$_SESSION["user"]->id}");
+			$allegroMessages = Message::filter("recipient = {$_SESSION["user"]->id} AND status = 'S' ORDER BY createdOn DESC");
+			$allegroMessages = array_map(function($x){
+
+				$x->author = User::get("id = $x->author");
+				return $x;
+			}, $allegroMessages);
 			break;
 
 		case "sent":
-			$allegroMessages = Message::filter("author = {$_SESSION["id"]}");
+			$allegroMessages = Message::filter("author = {$_SESSION["user"]->id} AND status = 'S' ORDER BY createdOn DESC");
+			$allegroMessages = array_map(function($x){
+
+				$x->recipient = User::get("id = $x->recipient");
+				return $x;
+			}, $allegroMessages);
 			break;
 
 		case "drafts":
-			$allegroMessages = Message::filter("author = {$_SESSION["id"]} AND status = 'D'");
+			$allegroMessages = Message::filter("author = {$_SESSION["user"]->id} AND status = 'D' ORDER BY createdOn DESC");
 			break;
 	}
 
 	if(isset($_GET["message"])){
 
 		$selectedMessage = Message::get("id = {$_GET["message"]}");
-		if($selectedMessage->author != $_SESSION["user"]->id){
+
+		if($selectedMessage->author != $_SESSION["user"]->id && $selectedMessage->recipient != $_SESSION["user"]->id){
+
 			$selectedMessage = null;
 		}
+		else{
+
+			$parsedown = new Parsedown();
+			$selectedMessage->body = $parsedown->text(preg_replace("/&gt;/", ">", htmlspecialchars($selectedMessage->body)));
+
+
+
+			if($_GET["tab"] == "inbox"){
+
+				$selectedMessage->author = User::get("id = $selectedMessage->author");
+			}
+			else{
+
+				$selectedMessage->recipient = User::get("id = $selectedMessage->recipient");
+			}
+		}
 	}
-	if(isset($_GET["deletemessage"])){
+	
+	if(isset($_GET["delete"])){
 
 		$deleteMessage = true;
-		$messageToDelete = $_GET["id"];
+		$messageToDelete = $_GET["message"];
+		$deletePermanently = ($selectedMessage->author == $_SESSION["user"]->id);
+	}
+
+	if(isset($_GET["compose"])){
+
+		if($_GET["tab"] == "drafts"){
+
+			$editingMessage = Message::get("id = {$_GET["message"]}");
+
+			$autofill = [
+				"to" => $editingMessage->to ?? "",
+				"subject" => $editingMessage->subject,
+				"body" => $editingMessage->body,
+				"id" => $editingMessage->id,
+			];
+		}
+		else if($_GET["tab"] == "inbox"){
+
+			$editingMessage = Message::get("id = {$_GET["message"]}");
+
+			$originalAuthor = User::get("id = $editingMessage->author");
+
+			$body = $editingMessage->body;
+
+			$body = preg_split("/\r\n|\r|\n/", $body);
+
+			for($i = 0; $i < count($body); $i++){
+
+				$body[$i] = "> ".$body[$i].PHP_EOL;
+			}
+
+			$body = implode($body);
+
+			$body = PHP_EOL.PHP_EOL.PHP_EOL.$originalAuthor->fullName()." wrote on ".date("d/m/y, H:i", strtotime($editingMessage->createdOn)).":".PHP_EOL.PHP_EOL.$body;
+
+			$autofill = [
+				"to" => $originalAuthor->username,
+				"subject" => "Re: ".$editingMessage->subject,
+				"body" => $body,
+			];
+		}
+
+		$compose = true;
 	}
 
 	$context = [
 		"title" => "Dashboard",
-		"metaDescription" => "",
 		"messages" => Messages::getMessages(),
 		"tab" => $_GET["tab"] ?? "inbox",
 		"allegroMessages" => $allegroMessages,
 		"selectedMessage" => $selectedMessage ?? null,
 		"deleteMessage" => $deleteMessage ?? false,
 		"messageToDelete" => $messageToDelete ?? null,
+		"deletePermanently" => $deletePermanently ?? null,
+		"compose" => $compose ?? false,
+		"autofill" => $autofill ?? [],
 	];
 	render("dashboard.php", $context);
 }
@@ -96,12 +200,19 @@ function dashboard(){
 function people(){
 
 	requireAuthentication();
-	
+
+	if(isset($_GET["id"])){
+
+		$selectedUser = User::get("id = {$_GET["id"]}");
+	}
+
 	$context = [
-		"title" => "People",
-		"metaDescription" => "",
+		"title" => "Classmates",
 		"messages" => Messages::getMessages(),
 		"people" => User::all(),
+		"classmate" => $selectedUser ?? null,
+		"compose" => isset($_GET["to"]),
+		"to" => $_GET["to"] ?? false,
 	];
 
 	render("people.php", $context);
@@ -112,34 +223,78 @@ function sendMessage(){
 	requirePOST();
 	requireAuthentication();
 	
-	$recipient = $_POST["to"];
-	$recipient = User::get("email = '$recipient' OR username = '$recipient'");
+	$failed = false;
+	$draft = false;
+	$notification = "";
 
-	if(!$recipient){
+	if($_POST["id"] != ""){
 
-		$draft = true;
-		$notification = "Recipient {$_POST["to"]} does not exist. Message saved as draft.";
+		$message = Message::get("id = {$_POST["id"]}");
 	}
-	if($_POST["submit"] == "draft"){
-
-		$draft = true;
-		$notification = "Message saved as draft.";
-	}
-
-	$message = new Message();
-	$message->author = $_SESSION["user"]->id;
-	$message->recipient = $recipient->id;
-	$message->subject = $_POST["subject"];
-	$message->body = $_POST["body"];
-	if($draft) $message->status = 'D';
 	else{
 
-		$message->save();
-		$notification = "Message sent.";
-		sendMessageNotificationMail($recipient, $message);
+		$message = new Message();
 	}
 
-	Messages::addMessage("success", $notification);
+	$message->author = $_SESSION["user"]->id;	
+	$message->subject = addslashes(htmlspecialchars($_POST["subject"]));
+	$message->body = addslashes($_POST["body"]);
+
+	switch($_POST["button"]){
+
+		case "send":
+			if(isset($_POST["to"])){
+
+				$recipient = User::get("username = '{$_POST["to"]}' OR email = '{$_POST["to"]}'");
+				if(!$recipient){
+
+					$failed = true;
+					$notification = "This user does not exist.";
+				}
+			}
+			else{
+
+				$failed = true;
+				$notification = "Please enter a username.";
+			}
+
+			if($failed){
+
+				$draft = true;
+				break;
+			}
+
+			$message->recipient = $recipient->id;
+			$message->createdOn = date("Y-m-d H:i:s", time());
+			$message->status = 'S';
+			$message->save();
+			Messages::addMessage("success", "Message sent successfully.");
+
+			if(!($_POST["isSilent"] ?? false)){
+
+				sendMessageNotificationMail($recipient, $message);
+			}
+			break;
+
+		case "draft":
+
+			$draft = true;
+			break;
+	}
+
+	if($draft){
+
+		$message->status = 'D';
+		echo $message->save();
+		if($failed){
+
+			Messages::addMessage("error", $notification." saved as draft.");
+		}
+		else{
+
+			Messages::addMessage("success", "message saved as draft");
+		}
+	}
 
 	header("Location: /dashboard");
 }
@@ -153,6 +308,11 @@ function deleteMessage(){
 	if($message->author == $_SESSION["user"]->id){
 		$message->delete();
 		$notification = "Message deleted.";
+		Messages::addMessage("success", $notification);
+	}
+	else if($message->recipient == $_SESSION["user"]->id){
+		$message->status = "R";
+		$message->save();
 		Messages::addMessage("success", $notification);
 	}
 	header("Location: /dashboard");
@@ -213,6 +373,8 @@ function account(){
 					}
 					else{
 						$user->email = $_POST["email"];
+						$user->emailVerified = false;
+						$emailChanged = true; 
 					}
 				}
 
@@ -226,7 +388,7 @@ function account(){
 					}
 					else if(User::exists("username = '{$_POST["username"]}'")){
 			
-						$errors["username"] = "A user with this user name address already exists.";
+						$errors["username"] = "A user with this username address already exists.";
 						$autofill["username"] = $_POST["username"];
 						$failed = true;
 					}
@@ -238,45 +400,51 @@ function account(){
 				if(!$failed){
 
 					$user->save();
+					if(isset($emailChanged)){
+
+						sendVerificationMail($user);
+						Messages::addMessage("info", "A confirmation mail for changing your email address has been sent to your original address. Please check your inbox.");
+					}
 					Messages::addMessage("success", "Your details have been saved.");
-
 				}
-
 				break;
 
-			case("emailPreferences"):
-				$user->emailNotify = $_POST["emailNotify"];
-				$user->emailDisplay = $_POST["emailDisplay"];
-				$user->emailInform = $_POST["emailInform"];
+			case("communication"):
+				$user->emailNotify = $_POST["emailNotify"] ?? false;
+				$user->emailInform = $_POST["emailInform"] ?? false;
 				$user->save();
+				$_SESSION["user"] = $user;
+				Messages::addMessage("success", "Communication preferences updated.");
 				break;
-		
+			case("privacy"):
+				$user->displayOnline = $_POST["displayOnline"] ?? false;
+				$user->displayEmail = $_POST["displayEmail"] ?? false;
+				$user->save();
+				$_SESSION["user"] = $user;
+				Messages::addMessage("success", "Privacy settings updated.");
+				break;
 			case("password"):
+
 				if(strlen($_POST["newPassword"]) < 8){
 
-					$errors["password"]["newPassword"] = "Password too short.";
+					$errors["newPassword"] = "Your password must be at least 8 characters.";
 				}
 				else if(password_verify($_POST["password"], $user->password)){
 
-					$user->password = $_POST["newPassword"];
+					$user->password = password_hash($_POST["newPassword"], PASSWORD_BCRYPT);
 					$user->save();
 					Messages::addMessage("success", "Your password has been updated.");
 				}
-				break;
+				else{
 
-			case("deleteAccount"):
-				if($_POST["id"] == $user->id && $_POST["confirmation"] == "delete"){
-
-					$user->delete();
-					Messages::addMessage("info", "Your account has been deleted. We are sorry to see you go.");
-					logout();
+					$errors["password"] = "Password incorrect.";
 				}
 				break;
 		}
 	}
-	else{
-		switch($tab){
+	else{ // REQUEST != POST
 
+		switch($tab){
 			case "details":
 				$autofill = [
 					"name" => $_SESSION["user"]->fullName(),
@@ -287,11 +455,8 @@ function account(){
 		}
 	}
 
-
-
-
 	$context = [
-		"title" => "",
+		"title" => "Account Settings",
 		"messages" => Messages::getMessages(),
 		"tab" => $tab,
 		"autofill" => $autofill ?? [],
@@ -299,7 +464,6 @@ function account(){
 	];
 	render("account.php", $context);
 }
-
 
 //authentication:
 
@@ -332,7 +496,7 @@ function register(){
 		}
 		else if(User::exists("username = '{$_POST["username"]}'")){
 
-			$errors["username"] = "A user with this user name address already exists.";
+			$errors["username"] = "A user with this username address already exists.";
 			$autofill["username"] = $_POST["username"];
 			$failed = true;
 		}
@@ -341,14 +505,14 @@ function register(){
 
 		if(!validateFullName($name)){
 
-			$errors["name"] = "Please enter a valid name.";
+			$errors["name"] = "Please enter a valid full name.";
 			$autofill["name"] = $_POST["name"];
 			$failed = true;
 		}
 
 		if(strlen($_POST["password"]) < 8){
 
-			$errors["password"] = "Password is too short.";
+			$errors["password"] = "Your password must be at least 8 characters.";
 			$failed = true;
 		}
 
@@ -362,13 +526,12 @@ function register(){
 			$user->lastName =  substr($name, strrpos($name, " ") + 1);
 			$user->save();
 			sendVerificationMail($user);
-			Messages::addMessage("success", "Welcome to Allegro! Please check your inbox for an email verification link.");
+			Messages::addMessage("success", "Welcome to Allegro! Please check your inbox for a verification link.");
 			login($user);
 		}
 	}
 	$context = [
 		"title" => "Sign Up",
-		"metaDescription" => "",
 		"autofill" => $autofill,
 		"errors" => $errors,
 	];
@@ -395,7 +558,6 @@ function loginView(){
 	}
 	$context = [
 		"title" => "Log In",
-		"metaDescription" => "",
 		"autofill" => $autofill,
 		"errors" => $errors,
 	];
@@ -412,15 +574,16 @@ function forgotPassword(){
 		if($user = User::get("email = '{$_POST["user"]}' OR username = '{$_POST["user"]}'")){
 
 			sendPasswordResetMail($user);
-			Messages::addMessage("info", "Email sent. Please check.");
+			Messages::addMessage("info", "A confirmation email has been sent. please check your inbox.");
 		}
 		else{
 
 			$autofill["user"] = $_POST["user"];
-			$errors["user"] = "Does not exist.";
+			$errors["user"] = "This user does not exist.";
 		}
 	}
 	$context = [
+		"title" => "Forgot Password",
 		"errors" => $errors,
 		"autofill" => $autofill,
 		"messages" => Messages::getMessages(),
@@ -442,20 +605,21 @@ function resetPassword(){
 
 				$user->password = password_hash($_POST["password"], PASSWORD_BCRYPT);
 				$user->save();
-				Messages::addMessage("success", "changed"); 
+				Messages::addMessage("success", "You password has been changed successfully."); 
 			}
 			else{
 
-				$errors["password"] = "password too short.";
+				$errors["password"] = "Your password must be at least 8 characters.";
 			}
 		}
 		else{
 
-			Messages::addMessage("error", "Your verification link has timed out."); 
+			Messages::addMessage("error", "Invalid verification link."); 
 		}
 	}
 
 	$context = [
+		"title" => "Reset Password",
 		"id" => $_GET["id"],
 		"token" => $_GET["token"],
 		"errors" => $errors ?? [],
@@ -466,18 +630,11 @@ function resetPassword(){
 
 function logout(){
 
+	$_SESSION["user"]->lastActive = 0;
+	$_SESSION["user"]->save();
 	$_SESSION = [];
 	session_destroy();
 	header("Location: /");
-}
-
-function about(){
-	requireUnauthentication("dashboard");
-	$context = [
-		"title" => "The ultimate student messenger - Allegro",
-		"metaDescription" => "",
-	];
-	render("about.php", $context);
 }
 
 function verifyEmail(){
@@ -491,8 +648,9 @@ function verifyEmail(){
 
 		$user = User::get("id = $user->id");
 		$user->emailVerified = true;
+		$_SESSION["user"]->emailVerified = true;
 		$user->save();
-		Messages::addMessage("success", "Your email address was verified successfully.");
+		Messages::addMessage("success", "Your email address has been verified successfully.");
 	}
 	else{
 
@@ -501,9 +659,12 @@ function verifyEmail(){
 	header("Location: /");
 }
 
-function support(){
+function requestVerificationMail(){
 
-		render("support.php"); 
+	requireAuthentication();
+	sendVerificationMail($_SESSION["user"]);
+	Messages::addMessage("info", "A verification email has been sent you your email address.");
+	header("Location: /account");
 }
 
 //error:

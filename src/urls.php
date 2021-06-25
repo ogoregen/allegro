@@ -1,25 +1,25 @@
 <?php
 
 $urls = [
-//	"path"           => "view",
-	""               => "landingPage",
-	"about"          => "about",
-	"privacy"        => "privacyPolicy",
-	"support"        => "support",
-	"404"            => "_404",
+//	"path"           		  => "view",
+	""               		  => "landingPage",
+	"about"          		  => "about",
+	"privacy"        		  => "privacyPolicy",
+	"support"        		  => "support",
+	"credits"        		  => "credits",
+	"404"            		  => "_404",
+		  
+	"register"       		  => "register",      		   	// auth
+	"login"          		  => "loginView",     		   	//
+	"forgotpassword" 		  => "forgotPassword",		   	//
+	"resetpassword"  		  => "resetPassword", 		   	//
+	"logout"         		  => "logout",        		   	// // non-visual
+    "verify"         		  => "verifyEmail",   			// //
+	"requestverificationmail" => "requestVerificationMail", // //
 
-	"register"       => "register",       // auth
-	"login"          => "loginView",      //
-	"forgotpassword" => "forgotPassword", //
-	"resetpassword"  => "resetPassword",  //
-	"logout"         => "logout",         // // non-visual
-    "verify"         => "verifyEmail",    // //
-
-	"dashboard"      => "dashboard",      // app
-	"classmates"     => "people",         //
-	"account"        => "account",        //
-	"sendmessage"    => "sendMessage",   // // non-visual
- 	"deletemessage"    => "deleteMessage", 
-	
-	"test"           => "test",
+	"dashboard"      		  => "dashboard",       		// app
+	"classmates"     		  => "people",          		//
+	"account"        		  => "account",         		//
+	"sendmessage"    		  => "sendMessage",     		// // non-visual
+ 	"deletemessage"    		  => "deleteMessage", 			// // 	
 ];
