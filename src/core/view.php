@@ -13,7 +13,7 @@ namespace Allegro\Core\view;
  */
 function requireAuthentication($next = ""){
 	
-	if(!isset($_SESSION["is_authenticated"])){
+	if(!isset($_SESSION["isAuthenticated"])){
 
 		if($next) $next = "?next=$next";
 		header("Location: /login$next");
@@ -27,7 +27,7 @@ function requireAuthentication($next = ""){
  */
 function requireUnauthentication($target = ""){
 
-	if(isset($_SESSION["is_authenticated"])) header("Location: /$target");
+	if(isset($_SESSION["isAuthenticated"])) header("Location: /$target");
 }
 
 /**

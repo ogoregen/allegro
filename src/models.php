@@ -20,8 +20,8 @@ class User extends Model{
 	public $emailNotify;
 	public $emailInform;
 
-	public $displayEmail;
 	public $displayOnline;
+	public $displayEmail;
 	
 	function fullName(){
 
@@ -91,4 +91,13 @@ class VerificationToken extends Model{
 		}
 		return $result;
 	}
+}
+
+class SupportTicket extends Model{
+
+	public $author;
+	public $createdOn;
+	public $solved;
+	public $subject;
+	public $body;
 }
