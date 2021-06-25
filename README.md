@@ -20,6 +20,7 @@
   - Permanent deletion by message author
 - Text formatting with Markdown
 - Notification emails
+- Silent messages that do not create notifications
 - Classmates page
   - Online status of users
   - User details 
