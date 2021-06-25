@@ -6,7 +6,7 @@
 
 - Authentication
   - Login with email address or username 
-  - Email verification with single use tokens
+  - Email verification and password recovery with single use tokens
 - Customization and settings
   - Changeable user information
   - Notification preferences
