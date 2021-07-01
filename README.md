@@ -4,26 +4,13 @@
 
 ## Features
 
-- Authentication
-  - Login with email address or username 
-  - Email verification and password recovery with single use tokens
-- Customization and settings
-  - Changeable user information
-  - Notification preferences
-  - Privacy preferences
-    - Disable online status
-    - Hide email address
 - Drafting messages
 - Message replies
 - Message deletion
-  - Removal from inbox 
-  - Permanent deletion by message author
 - Text formatting with Markdown
 - Notification emails
 - Silent messages that do not create notifications
 - Classmates page
-  - Online status of users
-  - User details 
 - Support tickets
 
 ## Deployment
@@ -36,7 +23,5 @@ Allegro requires PHP (version 8.0 or above) and MySQL. It is designed to work on
 - [PHPMailer](https://github.com/PHPMailer/PHPMailer)
 
 ## Credits
-
-Allegro was developed by Berfin Sünnetcioğlu, Fatma Kara, and Oğuzhan Göregen as part of CEIT133 course.
 
 Allegro uses [League Spartan](https://www.theleagueofmoveabletype.com/league-spartan) and [Manrope](https://manropefont.com/) fonts, background images from [BGJar](https://bgjar.com/), icons from [Font Awesome](https://fontawesome.com), and mockup images from [Smartmockups](https://smartmockups.com).
