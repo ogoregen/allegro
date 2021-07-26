@@ -7,10 +7,11 @@
 require_once "vendor/parsedown/Parsedown.php";
 
 require_once "core/mail.php";
-require_once "models.php";
+require_once "sturdy/view.php";
+require_once "sturdy/models.php";
 
 use function Allegro\Core\mail\sendMail;
-use function Allegro\Core\template\renderToString;
+use function Sturdy\renderToString;
 
 /**
  * Construct and send email address verification mail to given user.

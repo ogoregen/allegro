@@ -8,16 +8,16 @@
 
 require_once "vendor/parsedown/Parsedown.php";
 
-require_once "core/view.php";
-require_once "core/template.php";
-require_once "core/Messages.php";
+require_once "sturdy/Messages.php";
+require_once "sturdy/template.php";
 require_once "core/mail.php";
+require_once "core/view.php";
 
 require_once "models.php";
 require_once "utils.php";
 
-use Allegro\Core\Messages;
-use function Allegro\Core\template\render;
+use Sturdy\Messages;
+use function Sturdy\render;
 use function Allegro\Core\view\requirePOST;
 use function Allegro\Core\view\requireAuthentication;
 use function Allegro\Core\view\requireUnauthentication;

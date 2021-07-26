@@ -1,8 +1,8 @@
 <?php
 
-require_once "core/Model.php";
+require_once "sturdy/Model.php";
 
-use Allegro\Core\Model;
+use Sturdy\Model;
 
 class User extends Model{
 
